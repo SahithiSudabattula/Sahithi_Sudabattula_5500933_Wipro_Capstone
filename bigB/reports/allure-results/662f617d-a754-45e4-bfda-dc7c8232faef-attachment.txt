@@ -1,0 +1,3 @@
+[32mINFO    [0m AutomationLogger:test_negative.py:100 === NEGATIVE TEST (empty basket) START ===
+[32mINFO    [0m AutomationLogger:test_negative.py:21 Screenshot saved: screenshots\NEGATIVE_empty_basket.png
+[32mINFO    [0m AutomationLogger:test_negative.py:112 === NEGATIVE TEST PASSED | Empty basket checkout blocked ===

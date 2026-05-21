@@ -1,0 +1,12 @@
+behave
+selenium
+allure-behave
+webdriver-manager
+pytest
+pytest-html
+allure-pytest
+openpyxl
+pandas
+python-dotenv
+requests
+
