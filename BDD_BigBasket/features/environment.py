@@ -9,6 +9,7 @@ from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 
 from utils.config_reader import ConfigReader
+from utils.csv_reader import CSVReader
 from utils.logger import LogGen
 from utils.screenshot_util import ScreenshotUtil
 
@@ -20,6 +21,8 @@ REPORT_SHORTCUT = os.path.join("reports", "report.html")
 
 
 def before_all(context):
+    context.csv_data = CSVReader.read_all_csv_files()
+
     if os.path.exists(ALLURE_RESULTS_DIR):
         shutil.rmtree(ALLURE_RESULTS_DIR)
     if os.path.exists(ALLURE_REPORT_DIR):
@@ -60,6 +63,7 @@ def _build_edge_driver(headless=False):
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
+    options.add_experimental_option("detach", True)
     if headless:
         options.add_argument("--headless=new")
 
@@ -84,6 +88,7 @@ def _build_chrome_driver(headless=False):
 def before_scenario(context, scenario):
     logger.info("========================================")
     logger.info("STARTING SCENARIO: %s", scenario.name)
+    context.extra_screenshots = []
 
     browser = ConfigReader.get_browser().lower()
     headless = ConfigReader.get_headless()
@@ -103,12 +108,16 @@ def after_scenario(context, scenario):
     logger.info("SCENARIO STATUS: %s", scenario.status)
     should_capture = scenario.status == "failed" or "negative" in scenario.effective_tags
     if should_capture and hasattr(context, "driver"):
+        for path, name in getattr(context, "extra_screenshots", []):
+            logger.info("Attaching saved screenshot: %s", path)
+            _attach_screenshot_to_allure(path, name)
+
         path = ScreenshotUtil.capture_screenshot(context.driver, scenario.name)
         logger.info("Screenshot saved: %s", path)
         _attach_screenshot_to_allure(path, scenario.name)
 
     if hasattr(context, "driver"):
-        time.sleep(2)
+        time.sleep(5)
         context.driver.quit()
     logger.info("Browser closed")
     logger.info("========================================")

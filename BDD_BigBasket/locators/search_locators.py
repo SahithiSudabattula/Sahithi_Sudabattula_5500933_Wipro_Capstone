@@ -2,13 +2,13 @@ from selenium.webdriver.common.by import By
 
 
 class SearchLocators:
-    SEARCH_BOX = (
+    SEARCH_BOX      = (
         By.XPATH,
         "//input[@type='search' "
         "or contains(@placeholder,'Search') "
         "or contains(@class,'search')]",
     )
-    ADD_BUTTON = (
+    ADD_BUTTON      = (
         By.XPATH,
         "(//button[contains(text(),'Add') or contains(text(),'ADD')])[1]",
     )
@@ -16,21 +16,29 @@ class SearchLocators:
         By.XPATH,
         "//button[contains(text(),'Add') or contains(text(),'ADD')]",
     )
-    BASKET_BUTTON = (
+    AUTOCOMPLETE_LIST = (
         By.XPATH,
-        "//*[contains(translate(normalize-space(.),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'smart basket') "
-        "or contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'basket') "
-        "or contains(translate(@title,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'basket')]",
+        "//ul[contains(@class,'suggest') or contains(@class,'autocomplete')]",
+    )
+    BASKET_BUTTON   = (
+        By.XPATH,
+        "("
+        "//div[contains(@class,'bg-rossoCorsa-50') and contains(@class,'cursor-pointer')] | "
+        "//div[contains(@class,'bg-rossoCorsa-50') and .//*[name()='svg']] | "
+        "//button[contains(translate(.,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'basket')] | "
+        "//*[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'basket')]"
+        ")[1]",
     )
     CHECKOUT_BUTTON = (
         By.XPATH,
-        "//button[contains(translate(normalize-space(.),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'checkout')]",
+        "//button[contains(translate(.,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'checkout')]",
+    )
+    ADDRESS_DIV     = (
+        By.XPATH,
+        "(//div[contains(@class,'address-item') or contains(@class,'AddressCard')])[1]",
     )
     BASKET_CONTENT = (
         By.XPATH,
-        "//*[contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'basket') "
-        "or contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'checkout') "
-        "or contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'cart')]",
+        "//button[contains(translate(.,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'checkout')]",
     )
     INCREMENT_BUTTON = (By.XPATH, "(//button[contains(.,'+')])[1]")
-

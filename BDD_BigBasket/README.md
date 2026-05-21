@@ -17,6 +17,7 @@ features/         BDD feature files and step definitions
 locators/         Selenium locators grouped by page/functionality
 pages/            Page object classes that use locators
 utils/            Config, logging, and screenshot helpers
+test_data/        CSV data used by login, positive, negative, and e2e scenarios
 reports/          Allure results and generated report
 screenshots/      Failure and passed negative scenario screenshots
 ```
@@ -41,6 +42,14 @@ By default, `behave` shows normal terminal output and also generates Allure resu
 
 ```text
 reports/allure-results
+```
+
+Default run order:
+
+```text
+01_negative.feature
+02_positive.feature
+03_end_to_end.feature
 ```
 
 Run selected tags:
