@@ -3,6 +3,7 @@ import time
 import pytest
 import os
 import allure
+import re
 from selenium import webdriver
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.common.exceptions import TimeoutException
@@ -24,6 +25,10 @@ def take_screenshot(driver, name):
     logger.info(f"Screenshot saved: {path}")
     with open(path, "rb") as f:
         allure.attach(f.read(), name=name, attachment_type=allure.attachment_type.PNG)
+
+
+def sanitize_screenshot_name(name):
+    return re.sub(r"[^A-Za-z0-9_.-]+", "_", name).strip("_")
 
 
 @pytest.fixture(scope="function")
@@ -121,12 +126,17 @@ def logged_in_driver(driver):
 def pytest_runtest_makereport(item, call):
     outcome = yield
     report = outcome.get_result()
-    if report.when == "call" and report.failed:
+    if report.when == "call" and (report.passed or report.failed):
         driver = item.funcargs.get("driver") or item.funcargs.get("logged_in_driver")
         if driver:
-            test_name = item.name.replace(" ", "_").replace("[", "_").replace("]", "_")
-            logger.error(f"Test FAILED: {item.name} — capturing screenshot")
-            take_screenshot(driver, f"FAILED_{test_name}")
+            status = "PASSED" if report.passed else "FAILED"
+            test_name = sanitize_screenshot_name(item.name)
+            log_message = f"Test {status}: {item.name} - capturing screenshot"
+            if report.failed:
+                logger.error(log_message)
+            else:
+                logger.info(log_message)
+            take_screenshot(driver, f"{status}_{test_name}")
 
 
 def pytest_sessionfinish(session, exitstatus):

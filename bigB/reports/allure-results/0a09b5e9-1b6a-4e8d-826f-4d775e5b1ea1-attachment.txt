@@ -1,0 +1,22 @@
+INFO     AutomationLogger:conftest.py:36 === Setting up Edge WebDriver ===
+INFO     AutomationLogger:conftest.py:51 Edge WebDriver initialized with anti-detection flags
+INFO     AutomationLogger:conftest.py:53 bigB homepage opened
+INFO     AutomationLogger:test_search_and_checkout.py:27 === Test START | mobile: 9030652433 | product: Amul Butter ===
+INFO     AutomationLogger:login_page.py:21 Navigating to bigB
+INFO     AutomationLogger:base_page.py:12 Opening URL: https://www.bigbasket.com/
+INFO     AutomationLogger:base_page.py:15 URL opened: https://www.bigbasket.com/
+INFO     AutomationLogger:login_page.py:27 bigB homepage fully loaded
+INFO     AutomationLogger:login_page.py:47 Entering mobile/email: 9030652433
+INFO     AutomationLogger:login_page.py:54 Mobile/email entered successfully
+INFO     AutomationLogger:login_page.py:59 Clicking Continue button
+INFO     AutomationLogger:login_page.py:64 Continue clicked
+INFO     AutomationLogger:login_page.py:72 Waiting up to 30s for OTP page heading
+INFO     AutomationLogger:login_page.py:78 OTP page detected — enter OTP manually in browser
+INFO     AutomationLogger:login_page.py:92 Waiting up to 120s for Verify & Continue button
+INFO     AutomationLogger:login_page.py:97 Verify & Continue clickable — clicking
+INFO     AutomationLogger:login_page.py:100 Verify & Continue clicked
+INFO     AutomationLogger:login_page.py:112 Checking for location popup after login
+INFO     AutomationLogger:login_page.py:119 Location popup dismissed — clicked 'Got it'
+INFO     AutomationLogger:test_search_and_checkout.py:87 === Test PASSED | mobile: 9030652433 | product: Amul Butter ===
+INFO     AutomationLogger:conftest.py:55 Quitting WebDriver
+INFO     AutomationLogger:conftest.py:58 === WebDriver session closed ===

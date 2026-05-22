@@ -159,9 +159,40 @@ class SearchPage(BasePage):
         return False
 
     def click_increment(self):
-        print("Clicking Increment button...")
-        self.safe_click(SearchLocators.INCREMENT_BUTTON, "Increment button")
-        print("Quantity incremented successfully")
+        return self.click_increment_buttons(count=1)
+
+    def click_increment_buttons(self, count=1):
+        print(f"Clicking Increment button(s): {count}")
+        clicked_count = 0
+        last_error = None
+
+        for _ in range(count):
+            try:
+                element = WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located(SearchLocators.INCREMENT_BUTTON)
+                )
+                self.driver.execute_script(
+                    "arguments[0].scrollIntoView({block:'center'});",
+                    element,
+                )
+                time.sleep(0.5)
+                self.driver.execute_script("arguments[0].click();", element)
+                clicked_count += 1
+                time.sleep(1)
+            except Exception as error:
+                last_error = error
+                print(f"Increment button click failed: {error}")
+                break
+
+        if clicked_count == 0:
+            try:
+                self.safe_click(SearchLocators.INCREMENT_BUTTON, "Increment button")
+                clicked_count = 1
+            except Exception as error:
+                raise Exception("Failed to click Increment button") from (last_error or error)
+
+        print(f"Quantity incremented successfully for {clicked_count} item(s)")
+        return clicked_count
 
     def click_checkout(self):
         print("Clicking Checkout button...")

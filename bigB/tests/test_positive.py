@@ -28,9 +28,9 @@ def test_positive_search_and_basket(logged_in_driver, row):
         search.search_product(product)
         logger.info(f"Searched: {product}")
         print(f"Searched: {product}")
-        # validation: wait for search box again to confirm search executed
-        search.wait.until(EC.presence_of_element_located(search.SEARCH_BOX))
-        assert True, f"Search failed for product: {product}"
+        # validation: Add button should be visible when search results load
+        add_button = search.wait.until(EC.visibility_of_element_located(search.ADD_BUTTON))
+        assert add_button.is_displayed(), f"Search results not loaded for product: {product}"
     except Exception as e:
         logger.error(f"Search failed: {e}")
         raise
@@ -42,8 +42,8 @@ def test_positive_search_and_basket(logged_in_driver, row):
         logger.info("Product added")
         print("Product added")
         # validation: basket button should be clickable after adding
-        search.wait.until(EC.presence_of_element_located(search.BASKET_BUTTON))
-        assert True, "Product not added to basket"
+        basket_button = search.wait.until(EC.element_to_be_clickable(search.BASKET_BUTTON))
+        assert basket_button.is_enabled(), "Product not added to basket"
     except TimeoutException:
         logger.error("Add button not found")
         raise
@@ -55,8 +55,8 @@ def test_positive_search_and_basket(logged_in_driver, row):
         time.sleep(3)
         logger.info(f"=== POSITIVE TEST PASSED | {product} added to basket ===")
         print(f"=== POSITIVE TEST PASSED | {product} added to basket ===")
-        search.wait.until(EC.presence_of_element_located(search.CHECKOUT_BUTTON))
-        assert True, "Basket did not open correctly"
+        checkout_button = search.wait.until(EC.visibility_of_element_located(search.CHECKOUT_BUTTON))
+        assert checkout_button.is_displayed(), "Basket did not open correctly"
     except TimeoutException:
         logger.error("Basket button not found")
         raise

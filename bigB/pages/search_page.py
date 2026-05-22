@@ -92,7 +92,16 @@ class SearchPage(BasePage):
 
     def click_checkout(self):
         print("Clicking Checkout button...")
-        self.safe_click(self.CHECKOUT_BUTTON, "Checkout button")
+        element = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located(self.CHECKOUT_BUTTON)
+        )
+        try:
+            element.click()
+            print("Checkout button clicked")
+        except Exception as e:
+            print(f"Checkout button normal click failed, using JS click: {e}")
+            self.driver.execute_script("arguments[0].click();", element)
+            print("Checkout button clicked via JS")
 
 
     def select_address(self):
@@ -109,7 +118,3 @@ class SearchPage(BasePage):
         except Exception as e:
             print(f"Address selection failed (may not be required): {e}")
 
-    # def click_remove_all(self):
-    #     remove_buttons = self.driver.find_elements(By.XPATH, "//button[contains(text(),'Remove')]")
-    #     for btn in remove_buttons:
-    #         btn.click()

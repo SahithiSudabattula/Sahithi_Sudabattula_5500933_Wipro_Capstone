@@ -9,7 +9,8 @@ def step_open_basket(context):
 
 @when("User increases the product quantity")
 def step_increase_quantity(context):
-    get_search_page(context).click_increment()
+    clicked_count = get_search_page(context).click_increment()
+    assert clicked_count == 1, "Basket item quantity was not incremented"
 
 
 @then("Basket page should show checkout option")

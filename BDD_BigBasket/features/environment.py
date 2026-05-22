@@ -18,6 +18,7 @@ logger = LogGen.loggen()
 ALLURE_RESULTS_DIR = os.path.join("reports", "allure-results")
 ALLURE_REPORT_DIR = os.path.join("reports", "allure-report")
 REPORT_SHORTCUT = os.path.join("reports", "report.html")
+LOG_FILE = os.path.join("logs", "automation.log")
 
 
 def before_all(context):
@@ -56,6 +57,50 @@ def _attach_screenshot_to_allure(path, name):
         logger.warning("Could not attach screenshot to Allure: %s", error)
 
 
+def _attach_text_to_allure(text, name):
+    try:
+        allure.attach(
+            text,
+            name=name,
+            attachment_type=allure.attachment_type.TEXT,
+        )
+    except Exception as error:
+        logger.warning("Could not attach text to Allure: %s", error)
+
+
+def _flush_log_handlers():
+    for handler in logger.handlers:
+        try:
+            handler.flush()
+        except Exception:
+            pass
+
+
+def _read_log_from_position(start_position):
+    if not os.path.exists(LOG_FILE):
+        return ""
+
+    try:
+        with open(LOG_FILE, "r", encoding="utf-8", errors="replace") as log_file:
+            log_file.seek(start_position)
+            return log_file.read().strip()
+    except Exception as error:
+        logger.warning("Could not read scenario log file: %s", error)
+        return ""
+
+
+def _open_allure_report(allure_command):
+    try:
+        subprocess.Popen(
+            [allure_command, "open", ALLURE_REPORT_DIR],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        logger.info("Allure report opened automatically")
+    except Exception as error:
+        logger.warning("Could not open Allure report automatically: %s", error)
+
+
 def _build_edge_driver(headless=False):
     options = EdgeOptions()
     options.add_argument("--start-maximized")
@@ -86,6 +131,7 @@ def _build_chrome_driver(headless=False):
 
 
 def before_scenario(context, scenario):
+    context.log_start_position = os.path.getsize(LOG_FILE) if os.path.exists(LOG_FILE) else 0
     logger.info("========================================")
     logger.info("STARTING SCENARIO: %s", scenario.name)
     context.extra_screenshots = []
@@ -106,8 +152,7 @@ def before_scenario(context, scenario):
 
 def after_scenario(context, scenario):
     logger.info("SCENARIO STATUS: %s", scenario.status)
-    should_capture = scenario.status == "failed" or "negative" in scenario.effective_tags
-    if should_capture and hasattr(context, "driver"):
+    if hasattr(context, "driver"):
         for path, name in getattr(context, "extra_screenshots", []):
             logger.info("Attaching saved screenshot: %s", path)
             _attach_screenshot_to_allure(path, name)
@@ -115,6 +160,11 @@ def after_scenario(context, scenario):
         path = ScreenshotUtil.capture_screenshot(context.driver, scenario.name)
         logger.info("Screenshot saved: %s", path)
         _attach_screenshot_to_allure(path, scenario.name)
+
+    _flush_log_handlers()
+    scenario_log = _read_log_from_position(getattr(context, "log_start_position", 0))
+    if scenario_log:
+        _attach_text_to_allure(scenario_log, f"{scenario.name} log")
 
     if hasattr(context, "driver"):
         time.sleep(5)
@@ -158,3 +208,4 @@ def after_all(context):
         )
     logger.info("Allure HTML report generated: %s", ALLURE_REPORT_DIR)
     logger.info("Report shortcut generated: %s", REPORT_SHORTCUT)
+    _open_allure_report(allure_command)

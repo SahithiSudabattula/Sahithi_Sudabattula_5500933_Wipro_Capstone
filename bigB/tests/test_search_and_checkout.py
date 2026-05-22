@@ -62,8 +62,8 @@ def test_search_and_checkout(driver, login_data, search_data):
     search.search_product(product)
 
     # wait until Add button is visible (indicates product results loaded)
-    search.wait.until(EC.presence_of_element_located(search.ADD_BUTTON))
-    assert True, f"Search results not loaded for product: {product}"
+    add_button = search.wait.until(EC.visibility_of_element_located(search.ADD_BUTTON))
+    assert add_button.is_displayed(), f"Search results not loaded for product: {product}"
 
     search.click_add_button()
 
