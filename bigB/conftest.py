@@ -31,7 +31,7 @@ def sanitize_screenshot_name(name):
     return re.sub(r"[^A-Za-z0-9_.-]+", "_", name).strip("_")
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="module")
 def driver():
     logger.info("=== Setting up Edge WebDriver ===")
     options = EdgeOptions()
@@ -58,7 +58,7 @@ def driver():
     logger.info("=== WebDriver session closed ===")
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="module")
 def logged_in_driver(driver):
     login  = LoginPage(driver)
     search = SearchPage(driver)

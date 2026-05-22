@@ -1,0 +1,2 @@
+[32mINFO    [0m AutomationLogger:test_positive.py:51 === OPEN BASKET TEST START | Cricket bat ===
+[32mINFO    [0m AutomationLogger:test_positive.py:57 Basket opened for Cricket bat

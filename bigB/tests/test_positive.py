@@ -8,55 +8,62 @@ from utils.csv_reader import CSVReader
 from utils.logger import LogGen
 
 logger = LogGen.loggen()
-
 rows = CSVReader.read_csv("positive_data.csv")
 
 
-@allure.feature("BigBasket E2E")
-@allure.story("Positive: Search and Add to Basket")
-@pytest.mark.parametrize("row", rows, ids=[r["product"] for r in rows])
-def test_positive_search_and_basket(logged_in_driver, row):
-    product = row["product"]
-    driver = logged_in_driver
-    search = SearchPage(driver)
+@pytest.mark.usefixtures("logged_in_driver")
+class TestPositiveBigBasket:
 
-    logger.info(f"=== POSITIVE TEST START | {product} ===")
-    print(f"=== POSITIVE TEST START | {product} ===")
+    @allure.feature("BigBasket E2E")
+    @allure.story("Search Product")
+    @pytest.mark.parametrize("row", rows, ids=[r["product"] for r in rows])
+    def test_search_product(self, logged_in_driver, row):
+        product = row["product"]
+        search = SearchPage(logged_in_driver)
 
-    # Search for product
-    try:
+        logger.info(f"=== SEARCH TEST START | {product} ===")
         search.search_product(product)
-        logger.info(f"Searched: {product}")
-        print(f"Searched: {product}")
-        # validation: Add button should be visible when search results load
         add_button = search.wait.until(EC.visibility_of_element_located(search.ADD_BUTTON))
         assert add_button.is_displayed(), f"Search results not loaded for product: {product}"
-    except Exception as e:
-        logger.error(f"Search failed: {e}")
-        raise
+        logger.info(f"Searched: {product}")
 
-    # Click Add button
-    try:
+    @allure.feature("BigBasket E2E")
+    @allure.story("Add Product to Basket")
+    @pytest.mark.parametrize("row", rows, ids=[r["product"] for r in rows])
+    def test_add_to_basket(self, logged_in_driver, row):
+        product = row["product"]
+        search = SearchPage(logged_in_driver)
+
+        logger.info(f"=== ADD TEST START | {product} ===")
         search.wait.until(EC.presence_of_element_located(search.ADD_BUTTON))
         search.click_add_button()
-        logger.info("Product added")
-        print("Product added")
-        # validation: basket button should be clickable after adding
         basket_button = search.wait.until(EC.element_to_be_clickable(search.BASKET_BUTTON))
         assert basket_button.is_enabled(), "Product not added to basket"
-    except TimeoutException:
-        logger.error("Add button not found")
-        raise
+        logger.info("Product added")
 
-    # Open Basket
-    try:
+    @allure.feature("BigBasket E2E")
+    @allure.story("Open Basket")
+    @pytest.mark.parametrize("row", rows, ids=[r["product"] for r in rows])
+    def test_open_basket(self, logged_in_driver, row):
+        product = row["product"]
+        search = SearchPage(logged_in_driver)
+
+        logger.info(f"=== OPEN BASKET TEST START | {product} ===")
         search.wait.until(EC.presence_of_element_located(search.BASKET_BUTTON))
         search.click_basket()
         time.sleep(3)
-        logger.info(f"=== POSITIVE TEST PASSED | {product} added to basket ===")
-        print(f"=== POSITIVE TEST PASSED | {product} added to basket ===")
         checkout_button = search.wait.until(EC.visibility_of_element_located(search.CHECKOUT_BUTTON))
         assert checkout_button.is_displayed(), "Basket did not open correctly"
-    except TimeoutException:
-        logger.error("Basket button not found")
-        raise
+        logger.info(f"Basket opened for {product}")
+
+    @allure.feature("BigBasket E2E")
+    @allure.story("Checkout Button Visible")
+    @pytest.mark.parametrize("row", rows, ids=[r["product"] for r in rows])
+    def test_checkout_button_visible(self, logged_in_driver, row):
+        product = row["product"]
+        search = SearchPage(logged_in_driver)
+
+        logger.info(f"=== CHECKOUT TEST START | {product} ===")
+        checkout_button = search.wait.until(EC.visibility_of_element_located(search.CHECKOUT_BUTTON))
+        assert checkout_button.is_displayed(), "Checkout button not visible"
+        logger.info(f"=== POSITIVE TEST PASSED | {product} added to basket ===")

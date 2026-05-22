@@ -10,3 +10,5 @@ pandas
 python-dotenv
 requests
 
+
+allure-python-commons

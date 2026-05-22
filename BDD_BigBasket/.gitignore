@@ -1,8 +1,5 @@
 __pycache__/
 *.pyc
-logs/
-screenshots/
-reports/
 .venv/
 .pytest_cache/
 
