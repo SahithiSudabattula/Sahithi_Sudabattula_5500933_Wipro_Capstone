@@ -1,5 +1,8 @@
-from behave import then, when
-from features.steps.context_helpers import get_search_page
+from behave import given, then, when
+
+from pages.login_page import LoginPage
+from pages.search_page import SearchPage
+from utils.config_reader import ConfigReader
 from utils.csv_reader import CSVReader
 from utils.logger import LogGen
 from utils.screenshot_util import ScreenshotUtil
@@ -8,15 +11,70 @@ from utils.screenshot_util import ScreenshotUtil
 logger = LogGen.loggen()
 
 
-def _search_and_add_product(context, product_name):
-    logger.info("Searching and adding product: %s", product_name)
+def get_login_page(context):
+    login_page = getattr(context, "login_page", None)
+    if login_page is None:
+        login_page = LoginPage(context.driver)
+        context.login_page = login_page
+    return login_page
+
+
+def get_search_page(context):
+    search_page = getattr(context, "search_page", None)
+    if search_page is None:
+        search_page = SearchPage(context.driver)
+        context.search_page = search_page
+    return search_page
+
+
+def login_with_mobile(context, mobile):
+    logger.info("Starting login flow with mobile: %s", mobile)
+    assert str(mobile).strip(), "Mobile number is missing"
+
+    get_login_page(context).open_bigbasket()
+    get_search_page(context)
+    get_login_page(context).click_login()
+    get_login_page(context).enter_mobile_email(mobile)
+    get_login_page(context).click_continue()
+
+    if not get_login_page(context).wait_for_otp_page():
+        # BigBasket sometimes ignores the first Continue click, so retry once before failing.
+        print("OTP was not detected after Continue; retrying Continue once")
+        get_login_page(context).click_continue()
+        assert get_login_page(context).wait_for_otp_page(), "OTP page did not load"
+
+    # OTP is intentionally manual; automation waits until the user enters it in the browser.
+    get_login_page(context).wait_for_verify_and_click()
+    get_login_page(context).dismiss_location_popup()
+    verify_login_success(context)
+    logger.info("Login flow completed successfully")
+
+
+def get_mobile_from_data(context):
+    mobile = getattr(context, "mobile", None)
+    if mobile:
+        return mobile
+
+    # Prefer CSV mobile test data, then fall back to config.ini.
+    rows = CSVReader.read_csv("login_data.csv")
+    return rows[0].get("mobile", ConfigReader.get_mobile()) if rows else ConfigReader.get_mobile()
+
+
+def ensure_logged_in(context):
+    login_with_mobile(context, get_mobile_from_data(context))
+
+
+def verify_login_success(context):
+    login_page = get_login_page(context)
     search_page = get_search_page(context)
-    search_page.search_product(product_name)
-    assert search_page.is_add_button_available(), f"No addable product was displayed for: {product_name}"
-    search_page.click_add_button()
+    try:
+        search_page.wait_for_search_box(timeout=20)
+    except Exception:
+        login_page.open_bigbasket()
+        search_page.wait_for_search_box(timeout=20)
 
 
-def _try_search_and_add_product(context, product_name):
+def try_search_and_add_product(context, product_name):
     logger.info("Trying to search and add product: %s", product_name)
     search_page = get_search_page(context)
     search_page.search_product(product_name)
@@ -25,16 +83,74 @@ def _try_search_and_add_product(context, product_name):
         logger.warning("No addable product displayed for: %s", product_name)
         print(f"No addable product was displayed for: {product_name}; trying next csv product")
         return False
+
     search_page.click_add_button()
     logger.info("Product added to basket: %s", product_name)
     return True
 
 
+@given("User launches BigBasket application")
+def step_launch_bigbasket(context):
+    logger.info("Step: launch BigBasket application")
+    get_login_page(context).open_bigbasket()
+    get_search_page(context)
+
+
+@given("User is logged into BigBasket")
+def step_logged_into_bigbasket(context):
+    logger.info("Step: ensure user is logged into BigBasket")
+    ensure_logged_in(context)
+
+
+@when("User clicks on Login menu")
+def step_click_login(context):
+    logger.info("Step: click Login menu")
+    get_login_page(context).click_login()
+
+
+@when("User enters mobile number from config")
+def step_enter_mobile_from_config(context):
+    logger.info("Step: enter mobile number from config/csv")
+    mobile = get_mobile_from_data(context)
+    assert mobile.strip(), "Mobile number is missing in login_data.csv"
+    get_login_page(context).enter_mobile_email(mobile)
+
+
+@when('User enters mobile number "{mobile}"')
+def step_enter_mobile(context, mobile):
+    logger.info("Step: enter mobile number: %s", mobile)
+    get_login_page(context).enter_mobile_email(mobile)
+
+
+@when("User clicks Continue button")
+def step_click_continue(context):
+    logger.info("Step: click Continue button")
+    get_login_page(context).click_continue()
+
+
+@then("User should see OTP verification page")
+def step_otp_page_visible(context):
+    logger.info("Step: verify OTP page is visible")
+    assert get_login_page(context).wait_for_otp_page(), "OTP page did not load"
+
+
+@when("User completes OTP verification manually")
+def step_complete_otp_manually(context):
+    logger.info("Step: complete OTP verification manually")
+    get_login_page(context).wait_for_verify_and_click()
+    get_login_page(context).dismiss_location_popup()
+
+
+@then("User should login successfully")
+def step_login_success(context):
+    logger.info("Step: verify successful login")
+    verify_login_success(context)
+
+
 @when('User searches for product "{product_name}"')
 def step_search_product(context, product_name):
     logger.info("Step: search product: %s", product_name)
-    search_page = get_search_page(context)
-    search_page.search_product(product_name)
+    get_search_page(context).search_product(product_name)
 
 
 @when("User searches for positive product from csv")
@@ -54,8 +170,9 @@ def step_search_and_add_positive_products_from_csv(context):
     added_products = []
     for product_name in products:
         context.current_product = product_name
-        if _try_search_and_add_product(context, product_name):
+        if try_search_and_add_product(context, product_name):
             added_products.append(product_name)
+
     assert added_products, "No positive products from positive_data.csv could be added to basket"
     context.added_positive_products = added_products
     logger.info("Positive products added: %s", added_products)
@@ -125,22 +242,26 @@ def step_search_and_add_multiple_products(context):
         search_page.click_add_button()
 
 
-@when("User searches and adds checkout products from csv")
-def step_search_and_add_checkout_products_from_csv(context):
-    logger.info("Step: search and add checkout products from csv")
-    # End-to-end checkout products are controlled from test_data/search_data.csv.
-    products = CSVReader.values("search_data.csv", "product")
-    added_products = []
-    for product_name in products:
-        if _try_search_and_add_product(context, product_name):
-            added_products.append(product_name)
-    assert added_products, "No checkout products from search_data.csv could be added to basket"
-    context.added_checkout_products = added_products
-    logger.info("Checkout products added: %s", added_products)
-
-
 @then("No add button should be displayed for the invalid search")
 def step_no_add_button_for_invalid_search(context):
     logger.info("Step: verify no add button is displayed for invalid search")
     add_buttons = get_search_page(context).find_add_buttons()
     assert len(add_buttons) == 0, f"Expected no Add buttons, but found {len(add_buttons)}"
+
+
+@when("User opens the basket")
+def step_open_basket(context):
+    logger.info("Step: open basket")
+    get_search_page(context).click_basket()
+
+
+@then("Basket page should show checkout option")
+def step_basket_has_checkout(context):
+    logger.info("Step: verify basket page shows checkout option")
+    assert get_search_page(context).is_checkout_available(), "Basket did not open correctly"
+
+
+@then("Checkout should not be available for empty basket")
+def step_checkout_not_available(context):
+    logger.info("Step: verify checkout is unavailable for empty basket")
+    assert not get_search_page(context).is_checkout_enabled(), "Checkout should be blocked for empty basket"
