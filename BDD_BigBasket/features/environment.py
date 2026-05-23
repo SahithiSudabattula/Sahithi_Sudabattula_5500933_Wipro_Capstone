@@ -155,6 +155,12 @@ def before_scenario(context, scenario):
     context.driver.get(ConfigReader.get_base_url())
     logger.info("Browser opened for scenario: %s", scenario.name)
 
+def after_step(context, step):
+    if hasattr(context, "driver"):
+        step_name = f"{step.keyword}_{step.name}"
+        path = ScreenshotUtil.capture_screenshot(context.driver, step_name)
+        _attach_screenshot_to_allure(path, step_name)
+        logger.info("Step screenshot saved: %s", path)
 
 def after_scenario(context, scenario):
     logger.info("SCENARIO STATUS: %s", scenario.status)

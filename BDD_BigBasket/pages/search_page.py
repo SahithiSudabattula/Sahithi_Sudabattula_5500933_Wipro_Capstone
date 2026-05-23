@@ -2,6 +2,7 @@ import time
 from urllib.parse import quote_plus
 
 from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -181,167 +182,45 @@ class SearchPage(BasePage):
                 continue
         return False
 
-    def click_increment(self):
-        return self.click_increment_buttons(count=1)
-
-    def click_increment_buttons(self, count=1):
-        self.logger.info("Clicking Increment button(s): %s", count)
-        print(f"Clicking Increment button(s): {count}")
-        clicked_count = 0
-        last_error = None
-
-        for _ in range(count):
-            try:
-                # The basket quantity controls change often; scan visible buttons and verify quantity change.
-                clicked = WebDriverWait(self.driver, 10).until(
-                    lambda driver: self.driver.execute_async_script(
-                        """
-                        const done = arguments[0];
-
-                        const isVisible = (element) => {
-                            const rect = element.getBoundingClientRect();
-                            const style = window.getComputedStyle(element);
-                            return rect.width > 0 &&
-                                rect.height > 0 &&
-                                style.visibility !== "hidden" &&
-                                style.display !== "none";
-                        };
-
-                        const textOf = (element) =>
-                            (element.innerText || element.textContent || "")
-                                .replace(/\\s+/g, " ")
-                                .trim()
-                                .toLowerCase();
-
-                        const asSmallNumber = (text) => {
-                            const exact = String(text || "").trim().match(/^\\d{1,2}$/);
-                            return exact ? Number(exact[0]) : null;
-                        };
-
-                        const getQuantity = (button) => {
-                            const relatives = [
-                                button.previousElementSibling,
-                                button.nextElementSibling,
-                                button.parentElement,
-                            ].filter(Boolean);
-
-                            const input = button.parentElement
-                                ? button.parentElement.querySelector("input")
-                                : null;
-                            if (input && asSmallNumber(input.value) !== null) {
-                                return asSmallNumber(input.value);
-                            }
-
-                            for (const element of relatives) {
-                                const directNumber = asSmallNumber(textOf(element));
-                                if (directNumber !== null) {
-                                    return directNumber;
-                                }
-
-                                for (const child of [...element.children]) {
-                                    const childNumber = asSmallNumber(textOf(child));
-                                    if (childNumber !== null) {
-                                        return childNumber;
-                                    }
-                                }
-                            }
-
-                            return null;
-                        };
-
-                        const buttons = [...document.querySelectorAll("button")]
-                            .filter((button) => {
-                                const label = [
-                                    textOf(button),
-                                    (button.getAttribute("aria-label") || "").toLowerCase(),
-                                    (button.getAttribute("title") || "").toLowerCase(),
-                                ].join(" ");
-
-                                return isVisible(button) &&
-                                    !button.disabled &&
-                                    button.getAttribute("aria-disabled") !== "true" &&
-                                    (
-                                        label.includes("+") ||
-                                        label.includes("increase") ||
-                                        label.includes("increment")
-                                    );
-                            })
-                            .sort((a, b) => {
-                                const aRect = a.getBoundingClientRect();
-                                const bRect = b.getBoundingClientRect();
-                                return aRect.top - bRect.top || aRect.left - bRect.left;
-                            });
-
-                        for (const button of buttons) {
-                            const before = getQuantity(button);
-                            button.scrollIntoView({ block: "center" });
-                            button.click();
-                            setTimeout(() => {
-                                done({
-                                    clicked: true,
-                                    before,
-                                    after: getQuantity(button),
-                                    label: textOf(button) || button.getAttribute("aria-label") || "increment",
-                                });
-                            }, 1000);
-                            return;
-                        }
-
-                        done({ clicked: false });
-                        """
-                    )
-                )
-                if not clicked.get("clicked"):
-                    raise Exception("No visible increment button was found")
-                if (
-                    clicked.get("before") is not None
-                    and clicked.get("after") is not None
-                    and clicked.get("after") <= clicked.get("before")
-                ):
-                    raise Exception(
-                        "Increment click did not change quantity "
-                        f"from {clicked.get('before')} to {clicked.get('after')}"
-                    )
-
-                clicked_count += 1
-                self.logger.info(
-                    "Increment button clicked (%s/%s). Quantity before: %s | after: %s",
-                    clicked_count,
-                    count,
-                    clicked.get("before"),
-                    clicked.get("after"),
-                )
-            except Exception as error:
-                last_error = error
-                self.logger.warning("Increment button click failed: %s", error)
-                print(f"Increment button click failed: {error}")
-                break
-
-        if clicked_count == 0:
-            if last_error and "did not change quantity" in str(last_error):
-                self.logger.error("Increment button click did not update the quantity")
-                raise Exception("Basket item quantity was not incremented") from last_error
-            try:
-                # Fallback for older basket markup that still exposes a plain plus button.
-                self.logger.info("Using fallback increment locator")
-                element = WebDriverWait(self.driver, 10).until(
-                    EC.presence_of_element_located(SearchLocators.INCREMENT_BUTTON)
-                )
-                self.driver.execute_script(
-                    "arguments[0].scrollIntoView({block:'center'});",
-                    element,
-                )
-                time.sleep(0.5)
-                self.driver.execute_script("arguments[0].click();", element)
-                time.sleep(1)
-                clicked_count = 1
-            except Exception as error:
-                self.logger.error("Failed to click Increment button")
-                raise Exception("Failed to click Increment button") from (last_error or error)
-
-        self.logger.info("Quantity incremented successfully for %s item(s)", clicked_count)
-        print(f"Quantity incremented successfully for {clicked_count} item(s)")
-        return clicked_count
+    # def click_increment(self):
+    #     return self.click_increment_buttons(count=1)
+    #
+    # def click_increment_on_search_page(self):
+    #     try:
+    #         # Wait for the stepper to appear after Add is clicked
+    #         time.sleep(2)
+    #
+    #         btn = WebDriverWait(self.driver, 10).until(
+    #             lambda d: next(
+    #                 (
+    #                     b for b in d.find_elements("xpath",
+    #                                                "//button[normalize-space(text())='+'] | "
+    #                                                "//button[contains(@class,'increment') or contains(@class,'plus')] | "
+    #                                                "//button[@aria-label='Increase' or @aria-label='increase quantity']"
+    #                                                )
+    #                     if b.is_displayed() and b.is_enabled()
+    #                 ),
+    #                 None,
+    #             )
+    #         )
+    #         self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", btn)
+    #         time.sleep(0.5)
+    #         ActionChains(self.driver).move_to_element(btn).click(btn).perform()
+    #         time.sleep(1)
+    #         self.logger.info("Increment clicked via ActionChains on search page")
+    #         return True
+    #     except Exception as e:
+    #         self.logger.warning("ActionChains increment failed: %s", e)
+    #         # Print all visible buttons to debug
+    #         try:
+    #             btns = self.driver.find_elements("xpath", "//button")
+    #             for b in btns:
+    #                 if b.is_displayed():
+    #                     self.logger.info("VISIBLE BUTTON: text='%s' class='%s'",
+    #                                      b.text.strip(), b.get_attribute("class"))
+    #         except:
+    #             pass
+    #         return False
 
     def click_checkout(self):
         self.logger.info("Clicking Checkout button")
