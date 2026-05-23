@@ -7,6 +7,7 @@ class ConfigReader:
 
     @classmethod
     def _load(cls):
+        # Cache config.ini after the first read so every step uses the same settings.
         if cls._config is None:
             config_path = os.path.join(os.getcwd(), "config.ini")
             cls._config = configparser.ConfigParser()
@@ -36,4 +37,3 @@ class ConfigReader:
     @classmethod
     def get_mobile(cls):
         return cls._load().get("DEFAULT", "mobile")
-

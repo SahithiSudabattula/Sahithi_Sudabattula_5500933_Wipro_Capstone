@@ -12,11 +12,13 @@ logger = LogGen.loggen()
 def login_with_mobile(context, mobile):
     logger.info("Starting login flow with mobile: %s", mobile)
     assert str(mobile).strip(), "Mobile number is missing"
+    # Reuse the same login sequence from full login scenarios and background setup.
     step_launch_bigbasket(context)
     step_click_login(context)
     get_login_page(context).enter_mobile_email(mobile)
     step_click_continue(context)
     if not get_login_page(context).wait_for_otp_page():
+        # BigBasket sometimes ignores the first Continue click, so retry once before failing.
         print("OTP was not detected after Continue; retrying Continue once")
         step_click_continue(context)
         assert get_login_page(context).wait_for_otp_page(), "OTP page did not load"
@@ -37,6 +39,7 @@ def step_logged_into_bigbasket(context):
     logger.info("Step: ensure user is logged into BigBasket")
     mobile = getattr(context, "mobile", None)
     if not mobile:
+        # Prefer CSV mobile test data, then fall back to config.ini.
         rows = CSVReader.read_csv("login_data.csv")
         mobile = rows[0].get("mobile", ConfigReader.get_mobile()) if rows else ConfigReader.get_mobile()
     login_with_mobile(context, mobile)
@@ -54,6 +57,7 @@ def step_enter_mobile_from_config(context):
     rows = CSVReader.read_csv("login_data.csv")
     mobile = getattr(context, "mobile", None)
     if not mobile:
+        # Keeps the step usable even when login_data.csv is empty.
         mobile = rows[0].get("mobile", ConfigReader.get_mobile()) if rows else ConfigReader.get_mobile()
     assert mobile.strip(), "Mobile number is missing in login_data.csv"
     get_login_page(context).enter_mobile_email(mobile)
@@ -80,6 +84,7 @@ def step_otp_page_visible(context):
 @when("User completes OTP verification manually")
 def step_complete_otp_manually(context):
     logger.info("Step: complete OTP verification manually")
+    # OTP is intentionally manual; automation waits until the user enters it in the browser.
     login_page = get_login_page(context)
     login_page.wait_for_verify_and_click()
     login_page.dismiss_location_popup()

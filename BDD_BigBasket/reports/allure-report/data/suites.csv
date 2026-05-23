@@ -1,4 +1,4 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","46811","Login search csv products and navigate to checkout","","2026-05-23","passed","2026-05-23","","","",""
-"","33571","Search all positive products from csv and add them to basket","","2026-05-23","passed","2026-05-23","","","",""
-"","45528","Invalid search and empty basket checkout should be blocked","","2026-05-23","passed","2026-05-23","","","",""
+"","34788","Search all positive products from csv and add them to basket","","2026-05-23","passed","2026-05-23","","","",""
+"","44097","Invalid search and empty basket checkout should be blocked","","2026-05-23","passed","2026-05-23","","","",""
+"","51308","Login search csv products and navigate to checkout","","2026-05-23","passed","2026-05-23","","","",""

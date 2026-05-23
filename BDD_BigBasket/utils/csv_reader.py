@@ -10,6 +10,7 @@ logger = LogGen.loggen()
 class CSVReader:
     @staticmethod
     def test_data_dir():
+        # Resolve test data relative to the project so tests work from the repo root.
         return os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "test_data"))
 
     @staticmethod
@@ -35,6 +36,7 @@ class CSVReader:
     @staticmethod
     def values(filename, column, required=True):
         rows = CSVReader.read_required_csv(filename) if required else CSVReader.read_csv(filename)
+        # Return only non-empty values so blank CSV rows do not become test inputs.
         values = [row.get(column, "").strip() for row in rows if row.get(column, "").strip()]
         if required:
             assert values, f"{filename} must contain values in '{column}' column"
@@ -44,6 +46,7 @@ class CSVReader:
     def read_all_csv_files():
         data_dir = CSVReader.test_data_dir()
         csv_data = {}
+        # Used by before_all to validate that all CSV files can be read before scenarios start.
         for filename in sorted(os.listdir(data_dir)):
             if filename.lower().endswith(".csv"):
                 csv_data[filename] = CSVReader.read_csv(filename)

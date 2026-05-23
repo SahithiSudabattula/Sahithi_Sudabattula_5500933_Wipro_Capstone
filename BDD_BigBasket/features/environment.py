@@ -22,8 +22,10 @@ LOG_FILE = os.path.join("logs", "automation.log")
 
 
 def before_all(context):
+    # Load all CSV data once so missing or empty test data is caught before scenarios run.
     context.csv_data = CSVReader.read_all_csv_files()
 
+    # Start every run with fresh Allure output so old results do not mix with new results.
     if os.path.exists(ALLURE_RESULTS_DIR):
         shutil.rmtree(ALLURE_RESULTS_DIR)
     if os.path.exists(ALLURE_REPORT_DIR):
@@ -69,6 +71,7 @@ def _attach_text_to_allure(text, name):
 
 
 def _flush_log_handlers():
+    # Flush handlers before attaching logs so the latest scenario entries are included.
     for handler in logger.handlers:
         try:
             handler.flush()
@@ -77,6 +80,7 @@ def _flush_log_handlers():
 
 
 def _read_log_from_position(start_position):
+    # Each scenario stores its starting byte position and attaches only its own log lines.
     if not os.path.exists(LOG_FILE):
         return ""
 
@@ -113,6 +117,7 @@ def _build_edge_driver(headless=False):
         options.add_argument("--headless=new")
 
     driver = webdriver.Edge(options=options)
+    # Hide Selenium's webdriver flag to reduce automation detection on BigBasket.
     driver.execute_cdp_cmd(
         "Page.addScriptToEvaluateOnNewDocument",
         {"source": "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"},
@@ -131,6 +136,7 @@ def _build_chrome_driver(headless=False):
 
 
 def before_scenario(context, scenario):
+    # Remember where this scenario's logs begin for per-scenario Allure attachment.
     context.log_start_position = os.path.getsize(LOG_FILE) if os.path.exists(LOG_FILE) else 0
     logger.info("========================================")
     logger.info("STARTING SCENARIO: %s", scenario.name)
@@ -153,6 +159,7 @@ def before_scenario(context, scenario):
 def after_scenario(context, scenario):
     logger.info("SCENARIO STATUS: %s", scenario.status)
     if hasattr(context, "driver"):
+        # Attach screenshots captured inside steps first, then the final scenario screenshot.
         for path, name in getattr(context, "extra_screenshots", []):
             logger.info("Attaching saved screenshot: %s", path)
             _attach_screenshot_to_allure(path, name)
@@ -199,6 +206,7 @@ def after_all(context):
         return
 
     with open(REPORT_SHORTCUT, "w", encoding="utf-8") as file:
+        # Create a stable report.html entry point even though Allure generates a folder.
         file.write(
             "<!doctype html><html><head>"
             "<meta http-equiv='refresh' content='0; url=allure-report/index.html'>"

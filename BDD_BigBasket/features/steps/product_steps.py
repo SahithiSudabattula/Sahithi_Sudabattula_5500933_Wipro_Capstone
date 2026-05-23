@@ -21,6 +21,7 @@ def _try_search_and_add_product(context, product_name):
     search_page = get_search_page(context)
     search_page.search_product(product_name)
     if not search_page.is_add_button_available(timeout=10):
+        # CSV rows can contain unavailable products; skip them and continue with the next row.
         logger.warning("No addable product displayed for: %s", product_name)
         print(f"No addable product was displayed for: {product_name}; trying next csv product")
         return False
@@ -48,6 +49,7 @@ def step_search_positive_product_from_csv(context):
 @when("User searches and adds positive products from csv")
 def step_search_and_add_positive_products_from_csv(context):
     logger.info("Step: search and add positive products from csv")
+    # Parameterized positive products come from test_data/positive_data.csv.
     products = CSVReader.values("positive_data.csv", "product")
     added_products = []
     for product_name in products:
@@ -75,6 +77,7 @@ def step_search_invalid_product_from_csv(context):
 def step_search_all_invalid_products_from_csv(context):
     logger.info("Step: search all invalid products from csv")
     rows = CSVReader.read_required_csv("negative_data.csv")
+    # Only rows marked invalid_search are used for the invalid product search scenario.
     invalid_products = [
         row.get("product", "").strip()
         for row in rows
@@ -93,6 +96,7 @@ def step_search_all_invalid_products_from_csv(context):
         )
         screenshot_name = f"NEGATIVE_invalid_search_{product_name}"
         path = ScreenshotUtil.capture_screenshot(context.driver, screenshot_name)
+        # Store extra screenshots so environment.py can attach them after the scenario.
         extra_screenshots = getattr(context, "extra_screenshots", [])
         extra_screenshots.append((path, screenshot_name))
         context.extra_screenshots = extra_screenshots
@@ -112,6 +116,7 @@ def step_add_first_product(context):
 def step_search_and_add_multiple_products(context):
     logger.info("Step: search and add products from feature table")
     search_page = get_search_page(context)
+    # Supports Gherkin tables with a product_name column.
     for row in context.table:
         product_name = row["product_name"]
         logger.info("Searching table product: %s", product_name)
@@ -123,6 +128,7 @@ def step_search_and_add_multiple_products(context):
 @when("User searches and adds checkout products from csv")
 def step_search_and_add_checkout_products_from_csv(context):
     logger.info("Step: search and add checkout products from csv")
+    # End-to-end checkout products are controlled from test_data/search_data.csv.
     products = CSVReader.values("search_data.csv", "product")
     added_products = []
     for product_name in products:

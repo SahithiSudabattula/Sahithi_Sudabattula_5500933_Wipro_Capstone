@@ -33,6 +33,7 @@ class SearchPage(BasePage):
             raise TimeoutException("Search box not found within timeout") from error
 
     def _visible_enabled_element(self, locator):
+        # BigBasket can render multiple matching search inputs; use the first usable one.
         elements = self.driver.find_elements(*locator)
         for element in elements:
             try:
@@ -45,6 +46,7 @@ class SearchPage(BasePage):
     def search_product(self, product_name):
         self.logger.info("Searching for product: %s", product_name)
         print(f"Searching for product: {product_name}")
+        # Direct search URL is more stable than typing into autocomplete on this site.
         search_url = ConfigReader.get_base_url().rstrip("/") + f"/ps/?q={quote_plus(product_name)}&nc=as"
         self.driver.get(search_url)
         WebDriverWait(self.driver, 15).until(
@@ -97,6 +99,7 @@ class SearchPage(BasePage):
         last_error = None
         for attempt in range(1, 6):
             try:
+                # Product cards are dynamic, so find the first visible enabled Add button in the DOM.
                 clicked = self.driver.execute_script(
                     """
                     const buttons = [...document.querySelectorAll("button")]
@@ -147,6 +150,7 @@ class SearchPage(BasePage):
     def click_basket(self):
         self.logger.info("Opening Basket page")
         print("Opening Basket page...")
+        # Opening the basket URL avoids flaky header basket icon clicks.
         basket_url = ConfigReader.get_base_url().rstrip("/") + "/basket/?nc=nb"
         self.driver.get(basket_url)
         WebDriverWait(self.driver, 15).until(
@@ -157,6 +161,7 @@ class SearchPage(BasePage):
         time.sleep(3)
 
     def _header_basket_icon(self):
+        # Kept as a locator helper if direct basket navigation is replaced with a header click.
         elements = self.driver.find_elements(*SearchLocators.BASKET_BUTTON)
         width = self.driver.execute_script("return window.innerWidth || document.documentElement.clientWidth;")
         for element in elements:
@@ -187,6 +192,7 @@ class SearchPage(BasePage):
 
         for _ in range(count):
             try:
+                # The basket quantity controls change often; scan visible buttons and verify quantity change.
                 clicked = WebDriverWait(self.driver, 10).until(
                     lambda driver: self.driver.execute_async_script(
                         """
@@ -197,8 +203,6 @@ class SearchPage(BasePage):
                             const style = window.getComputedStyle(element);
                             return rect.width > 0 &&
                                 rect.height > 0 &&
-                                rect.bottom > 0 &&
-                                rect.top < window.innerHeight &&
                                 style.visibility !== "hidden" &&
                                 style.display !== "none";
                         };
@@ -318,7 +322,17 @@ class SearchPage(BasePage):
                 self.logger.error("Increment button click did not update the quantity")
                 raise Exception("Basket item quantity was not incremented") from last_error
             try:
-                self.safe_click(SearchLocators.INCREMENT_BUTTON, "Increment button")
+                # Fallback for older basket markup that still exposes a plain plus button.
+                self.logger.info("Using fallback increment locator")
+                element = WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located(SearchLocators.INCREMENT_BUTTON)
+                )
+                self.driver.execute_script(
+                    "arguments[0].scrollIntoView({block:'center'});",
+                    element,
+                )
+                time.sleep(0.5)
+                self.driver.execute_script("arguments[0].click();", element)
                 time.sleep(1)
                 clicked_count = 1
             except Exception as error:
@@ -334,6 +348,7 @@ class SearchPage(BasePage):
         print("Clicking Checkout button...")
         for attempt in range(1, 4):
             try:
+                # Prefer JS selection because sticky page layers can intercept normal Selenium clicks.
                 clicked = self.driver.execute_script(
                     """
                     const buttons = [...document.querySelectorAll("button")]
