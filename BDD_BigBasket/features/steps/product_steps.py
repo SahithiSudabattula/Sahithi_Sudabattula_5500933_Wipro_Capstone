@@ -19,13 +19,14 @@ def get_search_page(context):
 
 def _try_search_and_add_product(context, product_name):
     logger.info("Trying to search and add product: %s", product_name)
+    assert product_name.strip(), "Product name cannot be blank"
     search_page = get_search_page(context)
     search_page.search_product(product_name)
     if not search_page.is_add_button_available(timeout=10):
         logger.warning("No addable product displayed for: %s", product_name)
         print(f"No addable product was displayed for: {product_name}; trying next csv product")
         return False
-    search_page.click_add_button()
+    search_page.click_add_button_for_product(product_name)
     logger.info("Product added to basket: %s", product_name)
     return True
 
@@ -33,21 +34,30 @@ def _try_search_and_add_product(context, product_name):
 @when('User searches for product "{product_name}"')
 def step_search_product(context, product_name):
     logger.info("Step: search product: %s", product_name)
+    assert product_name.strip(), "Product name cannot be blank"
     get_search_page(context).search_product(product_name)
+    assert get_search_page(context).is_add_button_available(), (
+        f"Search results not loaded for product: {product_name}"
+    )
 
 
 @when("User searches for positive product from csv")
 def step_search_positive_product_from_csv(context):
     logger.info("Step: search first positive product from csv")
+
     products = CSVReader.values("positive_data.csv", "product")
     product_name = products[0]
     context.current_product = product_name
     get_search_page(context).search_product(product_name)
+    assert get_search_page(context).is_add_button_available(), (
+        f"Search results not loaded for product: {product_name}"
+    )
 
 
 @when("User searches and adds positive products from csv")
 def step_search_and_add_positive_products_from_csv(context):
     logger.info("Step: search and add positive products from csv")
+
     products = CSVReader.values("positive_data.csv", "product")
     added_products = []
     for product_name in products:
@@ -62,6 +72,7 @@ def step_search_and_add_positive_products_from_csv(context):
 @when("User searches for invalid product from csv")
 def step_search_invalid_product_from_csv(context):
     logger.info("Step: search invalid product from csv")
+
     rows = CSVReader.read_csv("negative_data.csv")
     invalid_rows = [
         row for row in rows
@@ -74,6 +85,7 @@ def step_search_invalid_product_from_csv(context):
 @when("User searches for all invalid products from csv")
 def step_search_all_invalid_products_from_csv(context):
     logger.info("Step: search all invalid products from csv")
+
     rows = CSVReader.read_required_csv("negative_data.csv")
     invalid_products = [
         row.get("product", "").strip()
@@ -133,8 +145,37 @@ def step_search_and_add_checkout_products_from_csv(context):
     logger.info("Checkout products added: %s", added_products)
 
 
+@when("User searches and adds one checkout product from csv")
+def step_search_and_add_one_checkout_product_from_csv(context):
+    logger.info("Step: search and add one checkout product from csv")
+    products = CSVReader.values("search_data.csv", "product")
+    product_name = products[0]
+    assert _try_search_and_add_product(context, product_name), (
+        f"Checkout product from search_data.csv could not be added to basket: {product_name}"
+    )
+    context.current_product = product_name
+    context.added_checkout_products = [product_name]
+    logger.info("Single checkout product added: %s", product_name)
+
+
 @then("No add button should be displayed for the invalid search")
 def step_no_add_button_for_invalid_search(context):
     logger.info("Step: verify no add button is displayed for invalid search")
     add_buttons = get_search_page(context).find_add_buttons()
     assert len(add_buttons) == 0, f"Expected no Add buttons, but found {len(add_buttons)}"
+
+
+@then("Product results should show add option")
+def step_product_results_show_add_option(context):
+    logger.info("Step: verify product results show add option")
+    product_name = getattr(context, "current_product", "selected product")
+    assert get_search_page(context).is_add_button_available(), (
+        f"Search results not loaded or Add button missing for product: {product_name}"
+    )
+
+
+@then("Basket should contain added positive products")
+def step_basket_should_contain_added_positive_products(context):
+    logger.info("Step: verify positive products were added")
+    added_products = getattr(context, "added_positive_products", [])
+    assert added_products, "No positive products were added to basket"

@@ -1,0 +1,19 @@
+2026-05-23 18:21:15,869 - INFO - ----------------------------------------
+2026-05-23 18:21:15,870 - INFO - STARTING SCENARIO: Empty basket checkout should be blocked
+2026-05-23 18:21:15,871 - INFO - Step: ensure user is logged into BigBasket
+2026-05-23 18:21:15,872 - INFO - Already logged in for this feature; reusing existing session
+2026-05-23 18:21:15,873 - INFO - Navigating to bigB
+2026-05-23 18:21:15,873 - INFO - Opening URL: https://www.bigbasket.com/
+2026-05-23 18:21:17,793 - INFO - URL opened: https://www.bigbasket.com/
+2026-05-23 18:21:18,124 - INFO - bigB homepage fully loaded
+2026-05-23 18:21:18,125 - INFO - Waiting for search box (timeout=20s)
+2026-05-23 18:21:18,190 - INFO - Search box ready
+2026-05-23 18:21:18,371 - INFO - Step screenshot saved: screenshots\Given_User_is_logged_into_BigBasket_20260523_182118.png
+2026-05-23 18:21:18,373 - INFO - Step: open basket
+2026-05-23 18:21:18,373 - INFO - Opening Basket page
+2026-05-23 18:21:20,319 - INFO - Basket page opened
+2026-05-23 18:21:23,445 - INFO - Step screenshot saved: screenshots\When_User_opens_the_basket_20260523_182123.png
+2026-05-23 18:21:23,446 - INFO - Step: verify checkout is unavailable for empty basket
+2026-05-23 18:21:23,554 - INFO - Step screenshot saved: screenshots\Then_Checkout_should_not_be_available_for_empty_basket_20260523_182123.png
+2026-05-23 18:21:23,555 - INFO - SCENARIO STATUS: Status.passed
+2026-05-23 18:21:23,645 - INFO - Screenshot saved: screenshots\Empty_basket_checkout_should_be_blocked_20260523_182123.png

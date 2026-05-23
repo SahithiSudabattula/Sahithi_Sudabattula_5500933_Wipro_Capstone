@@ -148,6 +148,67 @@ class SearchPage(BasePage):
             self.logger.error("Failed to click Add button")
             raise Exception("Failed to click Add button") from (last_error or error)
 
+    def _click_product_add_button(self, product_name):
+        script = """
+        const productName = arguments[0].toLowerCase();
+        const tokens = productName.split(/\\s+/).filter(Boolean);
+        const visible = (element) => {
+            const rect = element.getBoundingClientRect();
+            const style = window.getComputedStyle(element);
+            return rect.width > 0 && rect.height > 0 &&
+                style.display !== "none" && style.visibility !== "hidden";
+        };
+        const textOf = (element) =>
+            (element.innerText || element.textContent || element.getAttribute("aria-label") || "")
+                .replace(/\\s+/g, " ")
+                .trim()
+                .toLowerCase();
+        const matchesProduct = (text) => tokens.every((token) => text.includes(token));
+        const matchingProductNodes = [...document.querySelectorAll("body *")]
+            .filter((element) => visible(element) && matchesProduct(textOf(element)))
+            .sort((a, b) => {
+                const ar = a.getBoundingClientRect();
+                const br = b.getBoundingClientRect();
+                return (ar.width * ar.height) - (br.width * br.height);
+            });
+
+        for (const productNode of matchingProductNodes) {
+            let container = productNode;
+            for (let depth = 0; container && depth < 8; depth += 1, container = container.parentElement) {
+                if (!matchesProduct(textOf(container))) continue;
+                const buttons = [...container.querySelectorAll("button")]
+                    .filter((button) => {
+                        const text = textOf(button);
+                        const disabled = button.disabled || button.getAttribute("aria-disabled") === "true";
+                        return !disabled && visible(button) && (text === "add" || text.includes("add"));
+                    })
+                    .sort((a, b) => {
+                        const ar = a.getBoundingClientRect();
+                        const br = b.getBoundingClientRect();
+                        return ar.top - br.top || ar.left - br.left;
+                    });
+                if (!buttons.length) continue;
+                buttons[0].scrollIntoView({ block: "center", inline: "center" });
+                buttons[0].click();
+                return true;
+            }
+        }
+        return false;
+        """
+        return bool(self.driver.execute_script(script, product_name))
+
+    def click_add_button_for_product(self, product_name):
+        self.logger.info("Clicking Add button for product: %s", product_name)
+        print(f"Clicking Add button for product: {product_name}")
+        for attempt in range(1, 4):
+            if self._click_product_add_button(product_name):
+                self.logger.info("Add button clicked for product: %s", product_name)
+                print(f"Add button clicked for product: {product_name}")
+                time.sleep(2)
+                return
+            time.sleep(1)
+        raise Exception(f"Add button not found for product: {product_name}")
+
     def click_basket(self):
         self.logger.info("Opening Basket page")
         print("Opening Basket page...")
@@ -182,73 +243,29 @@ class SearchPage(BasePage):
                 continue
         return False
 
-    # def click_increment(self):
-    #     return self.click_increment_buttons(count=1)
-    #
-    # def click_increment_on_search_page(self):
-    #     try:
-    #         # Wait for the stepper to appear after Add is clicked
-    #         time.sleep(2)
-    #
-    #         btn = WebDriverWait(self.driver, 10).until(
-    #             lambda d: next(
-    #                 (
-    #                     b for b in d.find_elements("xpath",
-    #                                                "//button[normalize-space(text())='+'] | "
-    #                                                "//button[contains(@class,'increment') or contains(@class,'plus')] | "
-    #                                                "//button[@aria-label='Increase' or @aria-label='increase quantity']"
-    #                                                )
-    #                     if b.is_displayed() and b.is_enabled()
-    #                 ),
-    #                 None,
-    #             )
-    #         )
-    #         self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", btn)
-    #         time.sleep(0.5)
-    #         ActionChains(self.driver).move_to_element(btn).click(btn).perform()
-    #         time.sleep(1)
-    #         self.logger.info("Increment clicked via ActionChains on search page")
-    #         return True
-    #     except Exception as e:
-    #         self.logger.warning("ActionChains increment failed: %s", e)
-    #         # Print all visible buttons to debug
-    #         try:
-    #             btns = self.driver.find_elements("xpath", "//button")
-    #             for b in btns:
-    #                 if b.is_displayed():
-    #                     self.logger.info("VISIBLE BUTTON: text='%s' class='%s'",
-    #                                      b.text.strip(), b.get_attribute("class"))
-    #         except:
-    #             pass
-    #         return False
-
     def click_checkout(self):
         self.logger.info("Clicking Checkout button")
         print("Clicking Checkout button...")
         for attempt in range(1, 4):
             try:
-                # Prefer JS selection because sticky page layers can intercept normal Selenium clicks.
                 clicked = self.driver.execute_script(
                     """
                     const buttons = [...document.querySelectorAll("button")]
                         .map((button) => {
                             const rect = button.getBoundingClientRect();
                             const text = (button.innerText || button.textContent || "").trim().toLowerCase();
-                            return { button, rect, text };
+                            const disabled = button.disabled || button.getAttribute("aria-disabled") === "true";
+                            return { button, rect, text, disabled };
                         })
-                        .filter(({ button, rect, text }) =>
-                            !button.disabled &&
-                            button.getAttribute("aria-disabled") !== "true" &&
-                            rect.width > 0 &&
-                            rect.height > 0 &&
-                            rect.bottom > 0 &&
-                            rect.top < window.innerHeight &&
-                            text.includes("checkout")
+                        .filter(({ rect, text, disabled }) =>
+                            !disabled && rect.width > 0 && rect.height > 0 && text.includes("checkout")
                         )
                         .sort((a, b) => a.rect.top - b.rect.top || a.rect.left - b.rect.left);
 
                     if (!buttons.length) return false;
-                    buttons[0].button.click();
+                    const button = buttons[0].button;
+                    button.scrollIntoView({ block: "center" });
+                    button.click();
                     return true;
                     """
                 )
@@ -262,8 +279,8 @@ class SearchPage(BasePage):
                 print(f"Checkout button click attempt {attempt} failed: {error}")
             time.sleep(1)
 
-        self.logger.error("Checkout button is not visible in the current viewport")
-        raise Exception("Checkout button is not visible in the current viewport")
+        self.logger.error("Checkout button is not available on basket page")
+        raise Exception("Checkout button is not available on basket page")
 
     def select_address(self):
         self.logger.info("Selecting saved delivery address")
@@ -315,21 +332,40 @@ class SearchPage(BasePage):
 
     def is_checkout_available(self):
         try:
-            self.wait_for_presence(SearchLocators.CHECKOUT_BUTTON, timeout=15)
-            return True
+            return WebDriverWait(self.driver, 15).until(
+                lambda driver: self.driver.execute_script(
+                    """
+                    return [...document.querySelectorAll("button")].some((button) => {
+                        const rect = button.getBoundingClientRect();
+                        const text = (button.innerText || button.textContent || "").trim().toLowerCase();
+                        return rect.width > 0 && rect.height > 0 && text.includes("checkout");
+                    });
+                    """
+                )
+            )
         except TimeoutException:
             return False
 
     def is_basket_opened(self):
         try:
-            self.wait_for_presence(SearchLocators.BASKET_CONTENT, timeout=15)
-            return True
+            WebDriverWait(self.driver, 15).until(EC.url_contains("basket"))
+            return "basket" in self.driver.current_url.lower()
         except TimeoutException:
             return False
 
     def is_checkout_enabled(self):
-        buttons = self.driver.find_elements(*SearchLocators.CHECKOUT_BUTTON)
-        return bool(buttons) and buttons[0].is_enabled()
+        return bool(
+            self.driver.execute_script(
+                """
+                return [...document.querySelectorAll("button")].some((button) => {
+                    const rect = button.getBoundingClientRect();
+                    const text = (button.innerText || button.textContent || "").trim().toLowerCase();
+                    const disabled = button.disabled || button.getAttribute("aria-disabled") === "true";
+                    return !disabled && rect.width > 0 && rect.height > 0 && text.includes("checkout");
+                });
+                """
+            )
+        )
 
     def wait_for_checkout_page(self):
         try:

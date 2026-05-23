@@ -1,0 +1,30 @@
+2026-05-23 18:22:04,629 - INFO - ----------------------------------------
+2026-05-23 18:22:04,629 - INFO - STARTING SCENARIO: Open basket after adding positive product
+2026-05-23 18:22:04,630 - INFO - Step: ensure user is logged into BigBasket
+2026-05-23 18:22:04,630 - INFO - Already logged in for this feature; reusing existing session
+2026-05-23 18:22:04,631 - INFO - Navigating to bigB
+2026-05-23 18:22:04,631 - INFO - Opening URL: https://www.bigbasket.com/
+2026-05-23 18:22:06,299 - INFO - URL opened: https://www.bigbasket.com/
+2026-05-23 18:22:06,311 - INFO - bigB homepage fully loaded
+2026-05-23 18:22:06,313 - INFO - Waiting for search box (timeout=20s)
+2026-05-23 18:22:06,432 - INFO - Search box ready
+2026-05-23 18:22:06,659 - INFO - Step screenshot saved: screenshots\Given_User_is_logged_into_BigBasket_20260523_182206.png
+2026-05-23 18:22:06,660 - INFO - Step: search and add positive products from csv
+2026-05-23 18:22:06,661 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\positive_data.csv
+2026-05-23 18:22:06,662 - INFO - CSV loaded: 1 rows from positive_data.csv
+2026-05-23 18:22:06,662 - INFO - Trying to search and add product: Cricket bat
+2026-05-23 18:22:06,662 - INFO - Searching for product: Cricket bat
+2026-05-23 18:22:10,340 - INFO - Search submitted: Cricket bat
+2026-05-23 18:22:10,353 - INFO - Clicking Add button for product: Cricket bat
+2026-05-23 18:22:10,404 - INFO - Add button clicked for product: Cricket bat
+2026-05-23 18:22:12,405 - INFO - Product added to basket: Cricket bat
+2026-05-23 18:22:12,406 - INFO - Positive products added: ['Cricket bat']
+2026-05-23 18:22:12,546 - INFO - Step screenshot saved: screenshots\When_User_searches_and_adds_positive_products_from_csv_20260523_182212.png
+2026-05-23 18:22:12,548 - INFO - Step: open basket
+2026-05-23 18:22:12,548 - INFO - Opening Basket page
+2026-05-23 18:22:13,140 - INFO - Basket page opened
+2026-05-23 18:22:16,335 - INFO - Step screenshot saved: screenshots\And_User_opens_the_basket_20260523_182216.png
+2026-05-23 18:22:16,337 - INFO - Step: verify basket page is opened
+2026-05-23 18:22:16,519 - INFO - Step screenshot saved: screenshots\Then_Basket_page_should_be_opened_20260523_182216.png
+2026-05-23 18:22:16,520 - INFO - SCENARIO STATUS: Status.passed
+2026-05-23 18:22:16,667 - INFO - Screenshot saved: screenshots\Open_basket_after_adding_positive_product_20260523_182216.png

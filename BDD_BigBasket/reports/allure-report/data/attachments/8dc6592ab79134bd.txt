@@ -1,0 +1,30 @@
+2026-05-23 18:22:16,720 - INFO - ----------------------------------------
+2026-05-23 18:22:16,721 - INFO - STARTING SCENARIO: Checkout option should be visible for basket with product
+2026-05-23 18:22:16,722 - INFO - Step: ensure user is logged into BigBasket
+2026-05-23 18:22:16,723 - INFO - Already logged in for this feature; reusing existing session
+2026-05-23 18:22:16,724 - INFO - Navigating to bigB
+2026-05-23 18:22:16,724 - INFO - Opening URL: https://www.bigbasket.com/
+2026-05-23 18:22:18,714 - INFO - URL opened: https://www.bigbasket.com/
+2026-05-23 18:22:18,740 - INFO - bigB homepage fully loaded
+2026-05-23 18:22:18,741 - INFO - Waiting for search box (timeout=20s)
+2026-05-23 18:22:18,793 - INFO - Search box ready
+2026-05-23 18:22:19,037 - INFO - Step screenshot saved: screenshots\Given_User_is_logged_into_BigBasket_20260523_182218.png
+2026-05-23 18:22:19,039 - INFO - Step: search and add positive products from csv
+2026-05-23 18:22:19,039 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\positive_data.csv
+2026-05-23 18:22:19,040 - INFO - CSV loaded: 1 rows from positive_data.csv
+2026-05-23 18:22:19,041 - INFO - Trying to search and add product: Cricket bat
+2026-05-23 18:22:19,041 - INFO - Searching for product: Cricket bat
+2026-05-23 18:22:23,321 - INFO - Search submitted: Cricket bat
+2026-05-23 18:22:23,336 - INFO - Clicking Add button for product: Cricket bat
+2026-05-23 18:22:23,387 - INFO - Add button clicked for product: Cricket bat
+2026-05-23 18:22:25,387 - INFO - Product added to basket: Cricket bat
+2026-05-23 18:22:25,388 - INFO - Positive products added: ['Cricket bat']
+2026-05-23 18:22:25,537 - INFO - Step screenshot saved: screenshots\When_User_searches_and_adds_positive_products_from_csv_20260523_182225.png
+2026-05-23 18:22:25,539 - INFO - Step: open basket
+2026-05-23 18:22:25,539 - INFO - Opening Basket page
+2026-05-23 18:22:26,390 - INFO - Basket page opened
+2026-05-23 18:22:29,531 - INFO - Step screenshot saved: screenshots\And_User_opens_the_basket_20260523_182229.png
+2026-05-23 18:22:29,533 - INFO - Step: verify basket page shows checkout option
+2026-05-23 18:22:29,657 - INFO - Step screenshot saved: screenshots\Then_Basket_page_should_show_checkout_option_20260523_182229.png
+2026-05-23 18:22:29,659 - INFO - SCENARIO STATUS: Status.passed
+2026-05-23 18:22:29,772 - INFO - Screenshot saved: screenshots\Checkout_option_should_be_visible_for_basket_with_product_20260523_182229.png

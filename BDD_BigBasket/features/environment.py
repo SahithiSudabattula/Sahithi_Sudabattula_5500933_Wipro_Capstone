@@ -135,25 +135,32 @@ def _build_chrome_driver(headless=False):
     return webdriver.Chrome(options=options)
 
 
+def _build_driver():
+    browser = ConfigReader.get_browser().lower()
+    headless = ConfigReader.get_headless()
+    if browser == "chrome":
+        return _build_chrome_driver(headless=headless)
+    return _build_edge_driver(headless=headless)
+
+
+def before_feature(context, feature):
+    logger.info("========================================")
+    logger.info("STARTING FEATURE: %s", feature.name)
+    context.driver = _build_driver()
+    context.driver.implicitly_wait(ConfigReader.get_implicit_wait())
+    context.driver.get(ConfigReader.get_base_url())
+    context.config.bigbasket_logged_in = False
+    context.login_page = None
+    context.search_page = None
+    logger.info("Browser opened for feature: %s", feature.name)
+
+
 def before_scenario(context, scenario):
     # Remember where this scenario's logs begin for per-scenario Allure attachment.
     context.log_start_position = os.path.getsize(LOG_FILE) if os.path.exists(LOG_FILE) else 0
-    logger.info("========================================")
+    logger.info("----------------------------------------")
     logger.info("STARTING SCENARIO: %s", scenario.name)
     context.extra_screenshots = []
-
-    browser = ConfigReader.get_browser().lower()
-    headless = ConfigReader.get_headless()
-    implicit_wait = ConfigReader.get_implicit_wait()
-
-    if browser == "chrome":
-        context.driver = _build_chrome_driver(headless=headless)
-    else:
-        context.driver = _build_edge_driver(headless=headless)
-
-    context.driver.implicitly_wait(implicit_wait)
-    context.driver.get(ConfigReader.get_base_url())
-    logger.info("Browser opened for scenario: %s", scenario.name)
 
 def after_step(context, step):
     if hasattr(context, "driver"):
@@ -179,10 +186,16 @@ def after_scenario(context, scenario):
     if scenario_log:
         _attach_text_to_allure(scenario_log, f"{scenario.name} log")
 
+    logger.info("SCENARIO FINISHED: %s", scenario.name)
+    logger.info("----------------------------------------")
+
+
+def after_feature(context, feature):
     if hasattr(context, "driver"):
         time.sleep(5)
         context.driver.quit()
-    logger.info("Browser closed")
+        logger.info("Browser closed for feature: %s", feature.name)
+    logger.info("FINISHED FEATURE: %s", feature.name)
     logger.info("========================================")
 
 

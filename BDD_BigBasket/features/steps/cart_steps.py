@@ -18,21 +18,23 @@ def get_search_page(context):
 @when("User opens the basket")
 def step_open_basket(context):
     logger.info("Step: open basket")
-    get_search_page(context).click_basket()
+    search_page = get_search_page(context)
+    search_page.click_basket()
+    assert search_page.is_basket_opened(), f"Basket page did not open. Current URL: {context.driver.current_url}"
 
 
-@when("User increases the product quantity")
-def step_increase_quantity(context):
-    logger.info("Step: increase product quantity")
-    clicked_count = get_search_page(context).click_increment()
-    assert clicked_count == 1, "Basket item quantity was not incremented"
+@then("Basket page should be opened")
+def step_basket_page_opened(context):
+    logger.info("Step: verify basket page is opened")
+    assert get_search_page(context).is_basket_opened(), f"Basket page was not opened. Current URL: {context.driver.current_url}"
 
 
 @then("Basket page should show checkout option")
 def step_basket_has_checkout(context):
     logger.info("Step: verify basket page shows checkout option")
     search_page = get_search_page(context)
-    assert search_page.is_checkout_available(), "Basket did not open correctly"
+    assert search_page.is_checkout_available(), "Checkout button is not visible on basket page"
+    assert search_page.is_checkout_enabled(), "Checkout button is visible but disabled after adding product"
 
 
 @then("Checkout should not be available for empty basket")

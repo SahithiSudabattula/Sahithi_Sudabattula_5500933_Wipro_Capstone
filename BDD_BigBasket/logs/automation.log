@@ -1,181 +1,290 @@
-2026-05-23 14:50:52,329 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\login_data.csv
-2026-05-23 14:50:52,330 - INFO - CSV loaded: 1 rows from login_data.csv
-2026-05-23 14:50:52,330 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\negative_data.csv
-2026-05-23 14:50:52,330 - INFO - CSV loaded: 2 rows from negative_data.csv
-2026-05-23 14:50:52,330 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\positive_data.csv
-2026-05-23 14:50:52,330 - INFO - CSV loaded: 1 rows from positive_data.csv
-2026-05-23 14:50:52,332 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\search_data.csv
-2026-05-23 14:50:52,333 - INFO - CSV loaded: 2 rows from search_data.csv
-2026-05-23 14:50:52,335 - INFO - ========================================
-2026-05-23 14:50:52,336 - INFO - STARTING SCENARIO: Invalid search and empty basket checkout should be blocked
-2026-05-23 14:50:56,368 - INFO - Browser opened for scenario: Invalid search and empty basket checkout should be blocked
-2026-05-23 14:50:56,369 - INFO - Step: ensure user is logged into BigBasket
-2026-05-23 14:50:56,369 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\login_data.csv
-2026-05-23 14:50:56,369 - INFO - CSV loaded: 1 rows from login_data.csv
-2026-05-23 14:50:56,369 - INFO - Starting login flow with mobile: 9030652433
-2026-05-23 14:50:56,369 - INFO - Step: launch BigBasket application
-2026-05-23 14:50:56,370 - INFO - Navigating to bigB
-2026-05-23 14:50:56,370 - INFO - Opening URL: https://www.bigbasket.com/
-2026-05-23 14:50:57,689 - INFO - URL opened: https://www.bigbasket.com/
-2026-05-23 14:50:57,722 - INFO - bigB homepage fully loaded
-2026-05-23 14:50:57,723 - INFO - Step: click Login menu
-2026-05-23 14:50:57,723 - INFO - Clicking Login menu
-2026-05-23 14:50:58,190 - INFO - Login menu clicked
-2026-05-23 14:50:58,190 - INFO - Entering mobile/email: 9030652433
-2026-05-23 14:50:59,331 - INFO - Mobile/email entered successfully
-2026-05-23 14:50:59,332 - INFO - Step: click Continue button
-2026-05-23 14:50:59,332 - INFO - Clicking Continue button
-2026-05-23 14:50:59,408 - INFO - Continue clicked
-2026-05-23 14:50:59,408 - INFO - Waiting up to 30s for OTP page heading
-2026-05-23 14:51:00,726 - INFO - OTP page detected - enter OTP manually in browser
-2026-05-23 14:51:00,727 - INFO - Step: complete OTP verification manually
-2026-05-23 14:51:00,727 - INFO - Waiting up to 120s for Verify & Continue button
-2026-05-23 14:51:09,113 - INFO - Verify & Continue clickable - clicking
-2026-05-23 14:51:09,163 - INFO - Verify & Continue clicked
-2026-05-23 14:51:09,164 - INFO - Checking for location popup after login
-2026-05-23 14:51:11,681 - INFO - Location popup dismissed - clicked 'Got it'
-2026-05-23 14:51:11,682 - INFO - Step: verify successful login
-2026-05-23 14:51:11,682 - INFO - Waiting for search box (timeout=20s)
-2026-05-23 14:51:11,706 - INFO - Search box ready
-2026-05-23 14:51:11,706 - INFO - Login flow completed successfully
-2026-05-23 14:51:11,875 - INFO - Step screenshot saved: screenshots\Given_User_is_logged_into_BigBasket_20260523_145111.png
-2026-05-23 14:51:11,875 - INFO - Step: search all invalid products from csv
-2026-05-23 14:51:11,876 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\negative_data.csv
-2026-05-23 14:51:11,876 - INFO - CSV loaded: 2 rows from negative_data.csv
-2026-05-23 14:51:11,876 - INFO - Validating invalid search product: rftDfhwthdfvadwAEFDC
-2026-05-23 14:51:11,876 - INFO - Searching for product: rftDfhwthdfvadwAEFDC
-2026-05-23 14:51:15,274 - INFO - Search submitted: rftDfhwthdfvadwAEFDC
-2026-05-23 14:51:23,409 - INFO - Invalid search screenshot saved: screenshots\NEGATIVE_invalid_search_rftDfhwthdfvadwAEFDC_20260523_145123.png
-2026-05-23 14:51:23,541 - INFO - Step screenshot saved: screenshots\When_User_searches_for_all_invalid_products_from_csv_20260523_145123.png
-2026-05-23 14:51:23,542 - INFO - Step: open basket
-2026-05-23 14:51:23,542 - INFO - Opening Basket page
-2026-05-23 14:51:24,065 - INFO - Basket page opened
-2026-05-23 14:51:27,171 - INFO - Step screenshot saved: screenshots\And_User_opens_the_basket_20260523_145127.png
-2026-05-23 14:51:27,171 - INFO - Step: verify checkout is unavailable for empty basket
-2026-05-23 14:51:32,292 - INFO - Step screenshot saved: screenshots\Then_Checkout_should_not_be_available_for_empty_basket_20260523_145132.png
-2026-05-23 14:51:32,292 - INFO - SCENARIO STATUS: Status.passed
-2026-05-23 14:51:32,292 - INFO - Attaching saved screenshot: screenshots\NEGATIVE_invalid_search_rftDfhwthdfvadwAEFDC_20260523_145123.png
-2026-05-23 14:51:32,390 - INFO - Screenshot saved: screenshots\Invalid_search_and_empty_basket_checkout_should_be_blocked_20260523_145132.png
-2026-05-23 14:51:39,659 - INFO - Browser closed
-2026-05-23 14:51:39,659 - INFO - ========================================
-2026-05-23 14:51:39,663 - INFO - ========================================
-2026-05-23 14:51:39,663 - INFO - STARTING SCENARIO: Search all positive products from csv and add them to basket
-2026-05-23 14:51:43,123 - INFO - Browser opened for scenario: Search all positive products from csv and add them to basket
-2026-05-23 14:51:43,124 - INFO - Step: ensure user is logged into BigBasket
-2026-05-23 14:51:43,124 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\login_data.csv
-2026-05-23 14:51:43,125 - INFO - CSV loaded: 1 rows from login_data.csv
-2026-05-23 14:51:43,125 - INFO - Starting login flow with mobile: 9030652433
-2026-05-23 14:51:43,125 - INFO - Step: launch BigBasket application
-2026-05-23 14:51:43,125 - INFO - Navigating to bigB
-2026-05-23 14:51:43,125 - INFO - Opening URL: https://www.bigbasket.com/
-2026-05-23 14:51:44,589 - INFO - URL opened: https://www.bigbasket.com/
-2026-05-23 14:51:44,613 - INFO - bigB homepage fully loaded
-2026-05-23 14:51:44,614 - INFO - Step: click Login menu
-2026-05-23 14:51:44,614 - INFO - Clicking Login menu
-2026-05-23 14:51:44,946 - INFO - Login menu clicked
-2026-05-23 14:51:44,946 - INFO - Entering mobile/email: 9030652433
-2026-05-23 14:51:46,140 - INFO - Mobile/email entered successfully
-2026-05-23 14:51:46,140 - INFO - Step: click Continue button
-2026-05-23 14:51:46,141 - INFO - Clicking Continue button
-2026-05-23 14:51:46,175 - INFO - Continue clicked
-2026-05-23 14:51:46,175 - INFO - Waiting up to 30s for OTP page heading
-2026-05-23 14:51:47,942 - INFO - OTP page detected - enter OTP manually in browser
-2026-05-23 14:51:47,943 - INFO - Step: complete OTP verification manually
-2026-05-23 14:51:47,943 - INFO - Waiting up to 120s for Verify & Continue button
-2026-05-23 14:51:55,814 - INFO - Verify & Continue clickable - clicking
-2026-05-23 14:51:55,863 - INFO - Verify & Continue clicked
-2026-05-23 14:51:55,863 - INFO - Checking for location popup after login
-2026-05-23 14:51:58,456 - INFO - Location popup dismissed - clicked 'Got it'
-2026-05-23 14:51:58,457 - INFO - Step: verify successful login
-2026-05-23 14:51:58,457 - INFO - Waiting for search box (timeout=20s)
-2026-05-23 14:51:58,483 - INFO - Search box ready
-2026-05-23 14:51:58,483 - INFO - Login flow completed successfully
-2026-05-23 14:51:58,644 - INFO - Step screenshot saved: screenshots\Given_User_is_logged_into_BigBasket_20260523_145158.png
-2026-05-23 14:51:58,644 - INFO - Step: search and add positive products from csv
-2026-05-23 14:51:58,644 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\positive_data.csv
-2026-05-23 14:51:58,645 - INFO - CSV loaded: 1 rows from positive_data.csv
-2026-05-23 14:51:58,645 - INFO - Trying to search and add product: Cricket bat
-2026-05-23 14:51:58,645 - INFO - Searching for product: Cricket bat
-2026-05-23 14:52:02,179 - INFO - Search submitted: Cricket bat
-2026-05-23 14:52:02,185 - INFO - Clicking Add button
-2026-05-23 14:52:02,203 - INFO - Add button clicked
-2026-05-23 14:52:04,203 - INFO - Product added to basket: Cricket bat
-2026-05-23 14:52:04,204 - INFO - Positive products added: ['Cricket bat']
-2026-05-23 14:52:04,340 - INFO - Step screenshot saved: screenshots\When_User_searches_and_adds_positive_products_from_csv_20260523_145204.png
-2026-05-23 14:52:04,341 - INFO - Step: open basket
-2026-05-23 14:52:04,341 - INFO - Opening Basket page
-2026-05-23 14:52:05,014 - INFO - Basket page opened
-2026-05-23 14:52:08,139 - INFO - Step screenshot saved: screenshots\And_User_opens_the_basket_20260523_145208.png
-2026-05-23 14:52:08,140 - INFO - Step: verify basket page shows checkout option
-2026-05-23 14:52:08,322 - INFO - Step screenshot saved: screenshots\Then_Basket_page_should_show_checkout_option_20260523_145208.png
-2026-05-23 14:52:08,323 - INFO - SCENARIO STATUS: Status.passed
-2026-05-23 14:52:08,490 - INFO - Screenshot saved: screenshots\Search_all_positive_products_from_csv_and_add_them_to_basket_20260523_145208.png
-2026-05-23 14:52:15,736 - INFO - Browser closed
-2026-05-23 14:52:15,736 - INFO - ========================================
-2026-05-23 14:52:15,739 - INFO - ========================================
-2026-05-23 14:52:15,739 - INFO - STARTING SCENARIO: Login search csv products and navigate to checkout
-2026-05-23 14:52:19,116 - INFO - Browser opened for scenario: Login search csv products and navigate to checkout
-2026-05-23 14:52:19,116 - INFO - Step: ensure user is logged into BigBasket
-2026-05-23 14:52:19,117 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\login_data.csv
-2026-05-23 14:52:19,117 - INFO - CSV loaded: 1 rows from login_data.csv
-2026-05-23 14:52:19,117 - INFO - Starting login flow with mobile: 9030652433
-2026-05-23 14:52:19,117 - INFO - Step: launch BigBasket application
-2026-05-23 14:52:19,118 - INFO - Navigating to bigB
-2026-05-23 14:52:19,118 - INFO - Opening URL: https://www.bigbasket.com/
-2026-05-23 14:52:20,876 - INFO - URL opened: https://www.bigbasket.com/
-2026-05-23 14:52:20,901 - INFO - bigB homepage fully loaded
-2026-05-23 14:52:20,902 - INFO - Step: click Login menu
-2026-05-23 14:52:20,902 - INFO - Clicking Login menu
-2026-05-23 14:52:21,444 - INFO - Login menu clicked
-2026-05-23 14:52:21,445 - INFO - Entering mobile/email: 9030652433
-2026-05-23 14:52:22,615 - INFO - Mobile/email entered successfully
-2026-05-23 14:52:22,616 - INFO - Step: click Continue button
-2026-05-23 14:52:22,616 - INFO - Clicking Continue button
-2026-05-23 14:52:22,688 - INFO - Continue clicked
-2026-05-23 14:52:22,688 - INFO - Waiting up to 30s for OTP page heading
-2026-05-23 14:52:23,983 - INFO - OTP page detected - enter OTP manually in browser
-2026-05-23 14:52:23,983 - INFO - Step: complete OTP verification manually
-2026-05-23 14:52:23,983 - INFO - Waiting up to 120s for Verify & Continue button
-2026-05-23 14:52:33,900 - INFO - Verify & Continue clickable - clicking
-2026-05-23 14:52:33,954 - INFO - Verify & Continue clicked
-2026-05-23 14:52:33,961 - INFO - Checking for location popup after login
-2026-05-23 14:52:36,367 - INFO - Location popup dismissed - clicked 'Got it'
-2026-05-23 14:52:36,367 - INFO - Step: verify successful login
-2026-05-23 14:52:36,367 - INFO - Waiting for search box (timeout=20s)
-2026-05-23 14:52:36,397 - INFO - Search box ready
-2026-05-23 14:52:36,397 - INFO - Login flow completed successfully
-2026-05-23 14:52:36,575 - INFO - Step screenshot saved: screenshots\Given_User_is_logged_into_BigBasket_20260523_145236.png
-2026-05-23 14:52:36,576 - INFO - Step: search and add checkout products from csv
-2026-05-23 14:52:36,576 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\search_data.csv
-2026-05-23 14:52:36,576 - INFO - CSV loaded: 2 rows from search_data.csv
-2026-05-23 14:52:36,576 - INFO - Trying to search and add product: Amul Butter
-2026-05-23 14:52:36,576 - INFO - Searching for product: Amul Butter
-2026-05-23 14:52:40,075 - INFO - Search submitted: Amul Butter
-2026-05-23 14:52:40,081 - INFO - Clicking Add button
-2026-05-23 14:52:40,094 - INFO - Add button clicked
-2026-05-23 14:52:42,094 - INFO - Product added to basket: Amul Butter
-2026-05-23 14:52:42,095 - INFO - Trying to search and add product: Aashirvaad Atta
-2026-05-23 14:52:42,095 - INFO - Searching for product: Aashirvaad Atta
-2026-05-23 14:52:45,545 - INFO - Search submitted: Aashirvaad Atta
-2026-05-23 14:52:45,552 - INFO - Clicking Add button
-2026-05-23 14:52:45,570 - INFO - Add button clicked
-2026-05-23 14:52:47,570 - INFO - Product added to basket: Aashirvaad Atta
-2026-05-23 14:52:47,570 - INFO - Checkout products added: ['Amul Butter', 'Aashirvaad Atta']
-2026-05-23 14:52:47,683 - INFO - Step screenshot saved: screenshots\When_User_searches_and_adds_checkout_products_from_csv_20260523_145247.png
-2026-05-23 14:52:47,683 - INFO - Step: open basket
-2026-05-23 14:52:47,684 - INFO - Opening Basket page
-2026-05-23 14:52:48,356 - INFO - Basket page opened
-2026-05-23 14:52:51,494 - INFO - Step screenshot saved: screenshots\And_User_opens_the_basket_20260523_145251.png
-2026-05-23 14:52:51,495 - INFO - Step: click Checkout button
-2026-05-23 14:52:51,495 - INFO - Clicking Checkout button
-2026-05-23 14:52:51,512 - INFO - Checkout button clicked
-2026-05-23 14:52:53,637 - INFO - Step screenshot saved: screenshots\And_User_clicks_Checkout_button_20260523_145253.png
-2026-05-23 14:52:53,637 - INFO - Step: verify checkout page is reached
-2026-05-23 14:52:53,750 - INFO - Step screenshot saved: screenshots\Then_User_should_reach_checkout_page_20260523_145253.png
-2026-05-23 14:52:53,751 - INFO - SCENARIO STATUS: Status.passed
-2026-05-23 14:52:53,854 - INFO - Screenshot saved: screenshots\Login_search_csv_products_and_navigate_to_checkout_20260523_145253.png
-2026-05-23 14:53:01,100 - INFO - Browser closed
-2026-05-23 14:53:01,100 - INFO - ========================================
-2026-05-23 14:53:02,638 - INFO - Allure HTML report generated: reports\allure-report
-2026-05-23 14:53:02,638 - INFO - Report shortcut generated: reports\report.html
-2026-05-23 14:53:02,649 - INFO - Allure report opened automatically
+2026-05-23 18:20:32,958 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\login_data.csv
+2026-05-23 18:20:32,958 - INFO - CSV loaded: 1 rows from login_data.csv
+2026-05-23 18:20:32,959 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\negative_data.csv
+2026-05-23 18:20:32,959 - INFO - CSV loaded: 2 rows from negative_data.csv
+2026-05-23 18:20:32,959 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\positive_data.csv
+2026-05-23 18:20:32,959 - INFO - CSV loaded: 1 rows from positive_data.csv
+2026-05-23 18:20:32,961 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\search_data.csv
+2026-05-23 18:20:32,961 - INFO - CSV loaded: 2 rows from search_data.csv
+2026-05-23 18:20:32,967 - INFO - ========================================
+2026-05-23 18:20:32,968 - INFO - STARTING FEATURE: BigBasket Negative Test Cases
+2026-05-23 18:20:37,639 - INFO - Browser opened for feature: BigBasket Negative Test Cases
+2026-05-23 18:20:37,640 - INFO - ----------------------------------------
+2026-05-23 18:20:37,641 - INFO - STARTING SCENARIO: Invalid product search should not show add button
+2026-05-23 18:20:37,643 - INFO - Step: ensure user is logged into BigBasket
+2026-05-23 18:20:37,643 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\login_data.csv
+2026-05-23 18:20:37,644 - INFO - CSV loaded: 1 rows from login_data.csv
+2026-05-23 18:20:37,645 - INFO - Starting login flow with mobile: 9030652433
+2026-05-23 18:20:37,645 - INFO - Step: launch BigBasket application
+2026-05-23 18:20:37,646 - INFO - Navigating to bigB
+2026-05-23 18:20:37,647 - INFO - Opening URL: https://www.bigbasket.com/
+2026-05-23 18:20:40,045 - INFO - URL opened: https://www.bigbasket.com/
+2026-05-23 18:20:40,079 - INFO - bigB homepage fully loaded
+2026-05-23 18:20:40,090 - INFO - Step: click Login menu
+2026-05-23 18:20:40,146 - INFO - Clicking Login menu
+2026-05-23 18:20:40,578 - INFO - Login menu clicked
+2026-05-23 18:20:40,579 - INFO - Entering mobile/email: 9030652433
+2026-05-23 18:20:42,007 - INFO - Mobile/email entered successfully
+2026-05-23 18:20:42,008 - INFO - Step: click Continue button
+2026-05-23 18:20:42,008 - INFO - Clicking Continue button
+2026-05-23 18:20:42,208 - INFO - Continue clicked
+2026-05-23 18:20:42,208 - INFO - Waiting up to 30s for OTP page heading
+2026-05-23 18:20:44,780 - INFO - OTP page detected - enter OTP manually in browser
+2026-05-23 18:20:44,781 - INFO - Step: complete OTP verification manually
+2026-05-23 18:20:44,781 - INFO - Waiting up to 120s for Verify & Continue button
+2026-05-23 18:20:52,387 - INFO - Verify & Continue clickable - clicking
+2026-05-23 18:20:52,480 - INFO - Verify & Continue clicked
+2026-05-23 18:20:52,481 - INFO - Checking for location popup after login
+2026-05-23 18:20:55,175 - INFO - Location popup dismissed - clicked 'Got it'
+2026-05-23 18:20:55,176 - INFO - Step: verify successful login
+2026-05-23 18:20:55,176 - INFO - Waiting for search box (timeout=20s)
+2026-05-23 18:20:55,227 - INFO - Search box ready
+2026-05-23 18:20:55,247 - INFO - Login flow completed successfully
+2026-05-23 18:20:55,423 - INFO - Step screenshot saved: screenshots\Given_User_is_logged_into_BigBasket_20260523_182055.png
+2026-05-23 18:20:55,425 - INFO - Step: search all invalid products from csv
+2026-05-23 18:20:55,425 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\negative_data.csv
+2026-05-23 18:20:55,426 - INFO - CSV loaded: 2 rows from negative_data.csv
+2026-05-23 18:20:55,427 - INFO - Validating invalid search product: rftDfhwthdfvadwAEFDC
+2026-05-23 18:20:55,427 - INFO - Searching for product: rftDfhwthdfvadwAEFDC
+2026-05-23 18:20:59,203 - INFO - Search submitted: rftDfhwthdfvadwAEFDC
+2026-05-23 18:21:07,377 - INFO - Invalid search screenshot saved: screenshots\NEGATIVE_invalid_search_rftDfhwthdfvadwAEFDC_20260523_182107.png
+2026-05-23 18:21:07,514 - INFO - Step screenshot saved: screenshots\When_User_searches_for_all_invalid_products_from_csv_20260523_182107.png
+2026-05-23 18:21:07,516 - INFO - Step: verify no add button is displayed for invalid search
+2026-05-23 18:21:15,683 - INFO - Step screenshot saved: screenshots\Then_No_add_button_should_be_displayed_for_the_invalid_search_20260523_182115.png
+2026-05-23 18:21:15,684 - INFO - SCENARIO STATUS: Status.passed
+2026-05-23 18:21:15,684 - INFO - Attaching saved screenshot: screenshots\NEGATIVE_invalid_search_rftDfhwthdfvadwAEFDC_20260523_182107.png
+2026-05-23 18:21:15,815 - INFO - Screenshot saved: screenshots\Invalid_product_search_should_not_show_add_button_20260523_182115.png
+2026-05-23 18:21:15,865 - INFO - SCENARIO FINISHED: Invalid product search should not show add button
+2026-05-23 18:21:15,865 - INFO - ----------------------------------------
+2026-05-23 18:21:15,869 - INFO - ----------------------------------------
+2026-05-23 18:21:15,870 - INFO - STARTING SCENARIO: Empty basket checkout should be blocked
+2026-05-23 18:21:15,871 - INFO - Step: ensure user is logged into BigBasket
+2026-05-23 18:21:15,872 - INFO - Already logged in for this feature; reusing existing session
+2026-05-23 18:21:15,873 - INFO - Navigating to bigB
+2026-05-23 18:21:15,873 - INFO - Opening URL: https://www.bigbasket.com/
+2026-05-23 18:21:17,793 - INFO - URL opened: https://www.bigbasket.com/
+2026-05-23 18:21:18,124 - INFO - bigB homepage fully loaded
+2026-05-23 18:21:18,125 - INFO - Waiting for search box (timeout=20s)
+2026-05-23 18:21:18,190 - INFO - Search box ready
+2026-05-23 18:21:18,371 - INFO - Step screenshot saved: screenshots\Given_User_is_logged_into_BigBasket_20260523_182118.png
+2026-05-23 18:21:18,373 - INFO - Step: open basket
+2026-05-23 18:21:18,373 - INFO - Opening Basket page
+2026-05-23 18:21:20,319 - INFO - Basket page opened
+2026-05-23 18:21:23,445 - INFO - Step screenshot saved: screenshots\When_User_opens_the_basket_20260523_182123.png
+2026-05-23 18:21:23,446 - INFO - Step: verify checkout is unavailable for empty basket
+2026-05-23 18:21:23,554 - INFO - Step screenshot saved: screenshots\Then_Checkout_should_not_be_available_for_empty_basket_20260523_182123.png
+2026-05-23 18:21:23,555 - INFO - SCENARIO STATUS: Status.passed
+2026-05-23 18:21:23,645 - INFO - Screenshot saved: screenshots\Empty_basket_checkout_should_be_blocked_20260523_182123.png
+2026-05-23 18:21:23,704 - INFO - SCENARIO FINISHED: Empty basket checkout should be blocked
+2026-05-23 18:21:23,705 - INFO - ----------------------------------------
+2026-05-23 18:21:31,091 - INFO - Browser closed for feature: BigBasket Negative Test Cases
+2026-05-23 18:21:31,092 - INFO - FINISHED FEATURE: BigBasket Negative Test Cases
+2026-05-23 18:21:31,092 - INFO - ========================================
+2026-05-23 18:21:31,093 - INFO - ========================================
+2026-05-23 18:21:31,093 - INFO - STARTING FEATURE: BigBasket Positive Test Cases
+2026-05-23 18:21:36,179 - INFO - Browser opened for feature: BigBasket Positive Test Cases
+2026-05-23 18:21:36,181 - INFO - ----------------------------------------
+2026-05-23 18:21:36,181 - INFO - STARTING SCENARIO: Search positive product from csv
+2026-05-23 18:21:36,183 - INFO - Step: ensure user is logged into BigBasket
+2026-05-23 18:21:36,183 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\login_data.csv
+2026-05-23 18:21:36,184 - INFO - CSV loaded: 1 rows from login_data.csv
+2026-05-23 18:21:36,185 - INFO - Starting login flow with mobile: 9030652433
+2026-05-23 18:21:36,185 - INFO - Step: launch BigBasket application
+2026-05-23 18:21:36,186 - INFO - Navigating to bigB
+2026-05-23 18:21:36,187 - INFO - Opening URL: https://www.bigbasket.com/
+2026-05-23 18:21:37,796 - INFO - URL opened: https://www.bigbasket.com/
+2026-05-23 18:21:37,839 - INFO - bigB homepage fully loaded
+2026-05-23 18:21:37,861 - INFO - Step: click Login menu
+2026-05-23 18:21:37,901 - INFO - Clicking Login menu
+2026-05-23 18:21:38,340 - INFO - Login menu clicked
+2026-05-23 18:21:38,340 - INFO - Entering mobile/email: 9030652433
+2026-05-23 18:21:39,949 - INFO - Mobile/email entered successfully
+2026-05-23 18:21:39,950 - INFO - Step: click Continue button
+2026-05-23 18:21:39,950 - INFO - Clicking Continue button
+2026-05-23 18:21:40,019 - INFO - Continue clicked
+2026-05-23 18:21:40,020 - INFO - Waiting up to 30s for OTP page heading
+2026-05-23 18:21:41,646 - INFO - OTP page detected - enter OTP manually in browser
+2026-05-23 18:21:41,647 - INFO - Step: complete OTP verification manually
+2026-05-23 18:21:41,647 - INFO - Waiting up to 120s for Verify & Continue button
+2026-05-23 18:21:48,131 - INFO - Verify & Continue clickable - clicking
+2026-05-23 18:21:48,237 - INFO - Verify & Continue clicked
+2026-05-23 18:21:48,238 - INFO - Checking for location popup after login
+2026-05-23 18:21:51,122 - INFO - Location popup dismissed - clicked 'Got it'
+2026-05-23 18:21:51,123 - INFO - Step: verify successful login
+2026-05-23 18:21:51,123 - INFO - Waiting for search box (timeout=20s)
+2026-05-23 18:21:51,174 - INFO - Search box ready
+2026-05-23 18:21:51,202 - INFO - Login flow completed successfully
+2026-05-23 18:21:51,375 - INFO - Step screenshot saved: screenshots\Given_User_is_logged_into_BigBasket_20260523_182151.png
+2026-05-23 18:21:51,375 - INFO - Step: search first positive product from csv
+2026-05-23 18:21:51,376 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\positive_data.csv
+2026-05-23 18:21:51,377 - INFO - CSV loaded: 1 rows from positive_data.csv
+2026-05-23 18:21:51,378 - INFO - Searching for product: Cricket bat
+2026-05-23 18:21:55,495 - INFO - Search submitted: Cricket bat
+2026-05-23 18:21:55,667 - INFO - Step screenshot saved: screenshots\When_User_searches_for_positive_product_from_csv_20260523_182155.png
+2026-05-23 18:21:55,669 - INFO - Step: verify product results show add option
+2026-05-23 18:21:55,809 - INFO - Step screenshot saved: screenshots\Then_Product_results_should_show_add_option_20260523_182155.png
+2026-05-23 18:21:55,810 - INFO - SCENARIO STATUS: Status.passed
+2026-05-23 18:21:55,929 - INFO - Screenshot saved: screenshots\Search_positive_product_from_csv_20260523_182155.png
+2026-05-23 18:21:55,976 - INFO - SCENARIO FINISHED: Search positive product from csv
+2026-05-23 18:21:55,976 - INFO - ----------------------------------------
+2026-05-23 18:21:55,981 - INFO - ----------------------------------------
+2026-05-23 18:21:55,981 - INFO - STARTING SCENARIO: Add positive product to basket
+2026-05-23 18:21:55,983 - INFO - Step: ensure user is logged into BigBasket
+2026-05-23 18:21:55,984 - INFO - Already logged in for this feature; reusing existing session
+2026-05-23 18:21:55,985 - INFO - Navigating to bigB
+2026-05-23 18:21:55,985 - INFO - Opening URL: https://www.bigbasket.com/
+2026-05-23 18:21:57,915 - INFO - URL opened: https://www.bigbasket.com/
+2026-05-23 18:21:57,949 - INFO - bigB homepage fully loaded
+2026-05-23 18:21:57,950 - INFO - Waiting for search box (timeout=20s)
+2026-05-23 18:21:58,005 - INFO - Search box ready
+2026-05-23 18:21:58,189 - INFO - Step screenshot saved: screenshots\Given_User_is_logged_into_BigBasket_20260523_182158.png
+2026-05-23 18:21:58,191 - INFO - Step: search and add positive products from csv
+2026-05-23 18:21:58,191 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\positive_data.csv
+2026-05-23 18:21:58,192 - INFO - CSV loaded: 1 rows from positive_data.csv
+2026-05-23 18:21:58,192 - INFO - Trying to search and add product: Cricket bat
+2026-05-23 18:21:58,193 - INFO - Searching for product: Cricket bat
+2026-05-23 18:22:02,011 - INFO - Search submitted: Cricket bat
+2026-05-23 18:22:02,022 - INFO - Clicking Add button for product: Cricket bat
+2026-05-23 18:22:02,079 - INFO - Add button clicked for product: Cricket bat
+2026-05-23 18:22:04,080 - INFO - Product added to basket: Cricket bat
+2026-05-23 18:22:04,081 - INFO - Positive products added: ['Cricket bat']
+2026-05-23 18:22:04,263 - INFO - Step screenshot saved: screenshots\When_User_searches_and_adds_positive_products_from_csv_20260523_182204.png
+2026-05-23 18:22:04,265 - INFO - Step: verify positive products were added
+2026-05-23 18:22:04,424 - INFO - Step screenshot saved: screenshots\Then_Basket_should_contain_added_positive_products_20260523_182204.png
+2026-05-23 18:22:04,425 - INFO - SCENARIO STATUS: Status.passed
+2026-05-23 18:22:04,578 - INFO - Screenshot saved: screenshots\Add_positive_product_to_basket_20260523_182204.png
+2026-05-23 18:22:04,624 - INFO - SCENARIO FINISHED: Add positive product to basket
+2026-05-23 18:22:04,624 - INFO - ----------------------------------------
+2026-05-23 18:22:04,629 - INFO - ----------------------------------------
+2026-05-23 18:22:04,629 - INFO - STARTING SCENARIO: Open basket after adding positive product
+2026-05-23 18:22:04,630 - INFO - Step: ensure user is logged into BigBasket
+2026-05-23 18:22:04,630 - INFO - Already logged in for this feature; reusing existing session
+2026-05-23 18:22:04,631 - INFO - Navigating to bigB
+2026-05-23 18:22:04,631 - INFO - Opening URL: https://www.bigbasket.com/
+2026-05-23 18:22:06,299 - INFO - URL opened: https://www.bigbasket.com/
+2026-05-23 18:22:06,311 - INFO - bigB homepage fully loaded
+2026-05-23 18:22:06,313 - INFO - Waiting for search box (timeout=20s)
+2026-05-23 18:22:06,432 - INFO - Search box ready
+2026-05-23 18:22:06,659 - INFO - Step screenshot saved: screenshots\Given_User_is_logged_into_BigBasket_20260523_182206.png
+2026-05-23 18:22:06,660 - INFO - Step: search and add positive products from csv
+2026-05-23 18:22:06,661 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\positive_data.csv
+2026-05-23 18:22:06,662 - INFO - CSV loaded: 1 rows from positive_data.csv
+2026-05-23 18:22:06,662 - INFO - Trying to search and add product: Cricket bat
+2026-05-23 18:22:06,662 - INFO - Searching for product: Cricket bat
+2026-05-23 18:22:10,340 - INFO - Search submitted: Cricket bat
+2026-05-23 18:22:10,353 - INFO - Clicking Add button for product: Cricket bat
+2026-05-23 18:22:10,404 - INFO - Add button clicked for product: Cricket bat
+2026-05-23 18:22:12,405 - INFO - Product added to basket: Cricket bat
+2026-05-23 18:22:12,406 - INFO - Positive products added: ['Cricket bat']
+2026-05-23 18:22:12,546 - INFO - Step screenshot saved: screenshots\When_User_searches_and_adds_positive_products_from_csv_20260523_182212.png
+2026-05-23 18:22:12,548 - INFO - Step: open basket
+2026-05-23 18:22:12,548 - INFO - Opening Basket page
+2026-05-23 18:22:13,140 - INFO - Basket page opened
+2026-05-23 18:22:16,335 - INFO - Step screenshot saved: screenshots\And_User_opens_the_basket_20260523_182216.png
+2026-05-23 18:22:16,337 - INFO - Step: verify basket page is opened
+2026-05-23 18:22:16,519 - INFO - Step screenshot saved: screenshots\Then_Basket_page_should_be_opened_20260523_182216.png
+2026-05-23 18:22:16,520 - INFO - SCENARIO STATUS: Status.passed
+2026-05-23 18:22:16,667 - INFO - Screenshot saved: screenshots\Open_basket_after_adding_positive_product_20260523_182216.png
+2026-05-23 18:22:16,715 - INFO - SCENARIO FINISHED: Open basket after adding positive product
+2026-05-23 18:22:16,715 - INFO - ----------------------------------------
+2026-05-23 18:22:16,720 - INFO - ----------------------------------------
+2026-05-23 18:22:16,721 - INFO - STARTING SCENARIO: Checkout option should be visible for basket with product
+2026-05-23 18:22:16,722 - INFO - Step: ensure user is logged into BigBasket
+2026-05-23 18:22:16,723 - INFO - Already logged in for this feature; reusing existing session
+2026-05-23 18:22:16,724 - INFO - Navigating to bigB
+2026-05-23 18:22:16,724 - INFO - Opening URL: https://www.bigbasket.com/
+2026-05-23 18:22:18,714 - INFO - URL opened: https://www.bigbasket.com/
+2026-05-23 18:22:18,740 - INFO - bigB homepage fully loaded
+2026-05-23 18:22:18,741 - INFO - Waiting for search box (timeout=20s)
+2026-05-23 18:22:18,793 - INFO - Search box ready
+2026-05-23 18:22:19,037 - INFO - Step screenshot saved: screenshots\Given_User_is_logged_into_BigBasket_20260523_182218.png
+2026-05-23 18:22:19,039 - INFO - Step: search and add positive products from csv
+2026-05-23 18:22:19,039 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\positive_data.csv
+2026-05-23 18:22:19,040 - INFO - CSV loaded: 1 rows from positive_data.csv
+2026-05-23 18:22:19,041 - INFO - Trying to search and add product: Cricket bat
+2026-05-23 18:22:19,041 - INFO - Searching for product: Cricket bat
+2026-05-23 18:22:23,321 - INFO - Search submitted: Cricket bat
+2026-05-23 18:22:23,336 - INFO - Clicking Add button for product: Cricket bat
+2026-05-23 18:22:23,387 - INFO - Add button clicked for product: Cricket bat
+2026-05-23 18:22:25,387 - INFO - Product added to basket: Cricket bat
+2026-05-23 18:22:25,388 - INFO - Positive products added: ['Cricket bat']
+2026-05-23 18:22:25,537 - INFO - Step screenshot saved: screenshots\When_User_searches_and_adds_positive_products_from_csv_20260523_182225.png
+2026-05-23 18:22:25,539 - INFO - Step: open basket
+2026-05-23 18:22:25,539 - INFO - Opening Basket page
+2026-05-23 18:22:26,390 - INFO - Basket page opened
+2026-05-23 18:22:29,531 - INFO - Step screenshot saved: screenshots\And_User_opens_the_basket_20260523_182229.png
+2026-05-23 18:22:29,533 - INFO - Step: verify basket page shows checkout option
+2026-05-23 18:22:29,657 - INFO - Step screenshot saved: screenshots\Then_Basket_page_should_show_checkout_option_20260523_182229.png
+2026-05-23 18:22:29,659 - INFO - SCENARIO STATUS: Status.passed
+2026-05-23 18:22:29,772 - INFO - Screenshot saved: screenshots\Checkout_option_should_be_visible_for_basket_with_product_20260523_182229.png
+2026-05-23 18:22:29,815 - INFO - SCENARIO FINISHED: Checkout option should be visible for basket with product
+2026-05-23 18:22:29,816 - INFO - ----------------------------------------
+2026-05-23 18:22:37,201 - INFO - Browser closed for feature: BigBasket Positive Test Cases
+2026-05-23 18:22:37,202 - INFO - FINISHED FEATURE: BigBasket Positive Test Cases
+2026-05-23 18:22:37,202 - INFO - ========================================
+2026-05-23 18:22:37,204 - INFO - ========================================
+2026-05-23 18:22:37,204 - INFO - STARTING FEATURE: BigBasket End To End Checkout
+2026-05-23 18:22:41,248 - INFO - Browser opened for feature: BigBasket End To End Checkout
+2026-05-23 18:22:41,250 - INFO - ----------------------------------------
+2026-05-23 18:22:41,251 - INFO - STARTING SCENARIO: Login search single csv product and navigate to checkout
+2026-05-23 18:22:41,253 - INFO - Step: ensure user is logged into BigBasket
+2026-05-23 18:22:41,253 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\login_data.csv
+2026-05-23 18:22:41,254 - INFO - CSV loaded: 1 rows from login_data.csv
+2026-05-23 18:22:41,255 - INFO - Starting login flow with mobile: 9030652433
+2026-05-23 18:22:41,255 - INFO - Step: launch BigBasket application
+2026-05-23 18:22:41,257 - INFO - Navigating to bigB
+2026-05-23 18:22:41,257 - INFO - Opening URL: https://www.bigbasket.com/
+2026-05-23 18:22:43,106 - INFO - URL opened: https://www.bigbasket.com/
+2026-05-23 18:22:43,139 - INFO - bigB homepage fully loaded
+2026-05-23 18:22:43,163 - INFO - Step: click Login menu
+2026-05-23 18:22:43,199 - INFO - Clicking Login menu
+2026-05-23 18:22:43,949 - INFO - Login menu clicked
+2026-05-23 18:22:43,949 - INFO - Entering mobile/email: 9030652433
+2026-05-23 18:22:45,647 - INFO - Mobile/email entered successfully
+2026-05-23 18:22:45,647 - INFO - Step: click Continue button
+2026-05-23 18:22:45,648 - INFO - Clicking Continue button
+2026-05-23 18:22:45,715 - INFO - Continue clicked
+2026-05-23 18:22:45,716 - INFO - Waiting up to 30s for OTP page heading
+2026-05-23 18:22:46,771 - INFO - OTP page detected - enter OTP manually in browser
+2026-05-23 18:22:46,772 - INFO - Step: complete OTP verification manually
+2026-05-23 18:22:46,772 - INFO - Waiting up to 120s for Verify & Continue button
+2026-05-23 18:22:55,465 - INFO - Verify & Continue clickable - clicking
+2026-05-23 18:22:55,608 - INFO - Verify & Continue clicked
+2026-05-23 18:22:55,609 - INFO - Checking for location popup after login
+2026-05-23 18:22:58,636 - INFO - Location popup dismissed - clicked 'Got it'
+2026-05-23 18:22:58,636 - INFO - Step: verify successful login
+2026-05-23 18:22:58,637 - INFO - Waiting for search box (timeout=20s)
+2026-05-23 18:22:58,697 - INFO - Search box ready
+2026-05-23 18:22:58,745 - INFO - Login flow completed successfully
+2026-05-23 18:22:58,939 - INFO - Step screenshot saved: screenshots\Given_User_is_logged_into_BigBasket_20260523_182258.png
+2026-05-23 18:22:58,941 - INFO - Step: search and add one checkout product from csv
+2026-05-23 18:22:58,942 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\BDD_BigBasket\test_data\search_data.csv
+2026-05-23 18:22:58,943 - INFO - CSV loaded: 2 rows from search_data.csv
+2026-05-23 18:22:58,944 - INFO - Trying to search and add product: Amul Butter
+2026-05-23 18:22:58,944 - INFO - Searching for product: Amul Butter
+2026-05-23 18:23:02,764 - INFO - Search submitted: Amul Butter
+2026-05-23 18:23:02,779 - INFO - Clicking Add button for product: Amul Butter
+2026-05-23 18:23:02,828 - INFO - Add button clicked for product: Amul Butter
+2026-05-23 18:23:04,829 - INFO - Product added to basket: Amul Butter
+2026-05-23 18:23:04,830 - INFO - Single checkout product added: Amul Butter
+2026-05-23 18:23:04,984 - INFO - Step screenshot saved: screenshots\When_User_searches_and_adds_one_checkout_product_from_csv_20260523_182304.png
+2026-05-23 18:23:04,985 - INFO - Step: open basket
+2026-05-23 18:23:04,985 - INFO - Opening Basket page
+2026-05-23 18:23:05,508 - INFO - Basket page opened
+2026-05-23 18:23:08,720 - INFO - Step screenshot saved: screenshots\And_User_opens_the_basket_20260523_182308.png
+2026-05-23 18:23:08,722 - INFO - Step: click Checkout button
+2026-05-23 18:23:08,745 - INFO - Clicking Checkout button
+2026-05-23 18:23:08,776 - INFO - Checkout button clicked
+2026-05-23 18:23:10,916 - INFO - Step screenshot saved: screenshots\And_User_clicks_Checkout_button_20260523_182310.png
+2026-05-23 18:23:10,918 - INFO - Step: verify checkout page is reached
+2026-05-23 18:23:11,067 - INFO - Step screenshot saved: screenshots\Then_User_should_reach_checkout_page_20260523_182310.png
+2026-05-23 18:23:11,068 - INFO - SCENARIO STATUS: Status.passed
+2026-05-23 18:23:11,205 - INFO - Screenshot saved: screenshots\Login_search_single_csv_product_and_navigate_to_checkout_20260523_182311.png
+2026-05-23 18:23:11,266 - INFO - SCENARIO FINISHED: Login search single csv product and navigate to checkout
+2026-05-23 18:23:11,267 - INFO - ----------------------------------------
+2026-05-23 18:23:18,640 - INFO - Browser closed for feature: BigBasket End To End Checkout
+2026-05-23 18:23:18,640 - INFO - FINISHED FEATURE: BigBasket End To End Checkout
+2026-05-23 18:23:18,641 - INFO - ========================================
+2026-05-23 18:23:20,738 - INFO - Allure HTML report generated: reports\allure-report
+2026-05-23 18:23:20,738 - INFO - Report shortcut generated: reports\report.html
+2026-05-23 18:23:20,759 - INFO - Allure report opened automatically

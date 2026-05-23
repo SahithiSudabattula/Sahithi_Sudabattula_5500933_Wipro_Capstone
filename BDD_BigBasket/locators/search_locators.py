@@ -41,4 +41,3 @@ class SearchLocators:
         By.XPATH,
         "//button[contains(translate(.,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'checkout')]",
     )
-    INCREMENT_BUTTON = (By.XPATH, "(//button[contains(.,'+')])[1]")

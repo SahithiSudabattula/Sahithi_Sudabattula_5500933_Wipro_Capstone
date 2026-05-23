@@ -134,3 +134,9 @@ class LoginPage(BasePage):
         except Exception:
             self.logger.info("Location popup was not displayed")
             print("No location popup appeared - continuing")
+
+    def is_login_menu_visible(self):
+        try:
+            return self.driver.find_element(*LoginLocators.LOGIN_BUTTON).is_displayed()
+        except Exception:
+            return False
