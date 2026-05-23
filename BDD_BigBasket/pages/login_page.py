@@ -22,6 +22,7 @@ class LoginPage(BasePage):
         print("bigB homepage fully loaded")
 
     def click_login(self):
+        self.logger.info("Clicking Login menu")
         try:
             element = WebDriverWait(self.driver, 20).until(
                 EC.presence_of_element_located(LoginLocators.LOGIN_BUTTON)
@@ -31,10 +32,14 @@ class LoginPage(BasePage):
             )
             self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
             element.click()
+            self.logger.info("Login menu clicked")
         except TimeoutException:
+            self.logger.warning("Login menu was not clickable; using JS click fallback")
             element = self.driver.find_element(*LoginLocators.LOGIN_BUTTON)
             self.driver.execute_script("arguments[0].click();", element)
+            self.logger.info("Login menu clicked via JS")
         except Exception as error:
+            self.logger.error("Login button failed: %s", error)
             raise Exception(f"Login button failed: {error}") from error
 
     def enter_mobile_email(self, value):
