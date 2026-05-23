@@ -1,0 +1,4 @@
+[32mINFO    [0m AutomationLogger:test_positive.py:66 === CHECKOUT TEST START | Cricket bat ===
+[32mINFO    [0m AutomationLogger:test_positive.py:69 === POSITIVE TEST PASSED | Cricket bat added to basket ===
+[32mINFO    [0m AutomationLogger:conftest.py:55 Quitting WebDriver
+[32mINFO    [0m AutomationLogger:conftest.py:58 === WebDriver session closed ===

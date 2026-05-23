@@ -1,0 +1,2 @@
+[32mINFO    [0m AutomationLogger:test_positive.py:37 === ADD TEST START | Cricket bat ===
+[32mINFO    [0m AutomationLogger:test_positive.py:42 Product added

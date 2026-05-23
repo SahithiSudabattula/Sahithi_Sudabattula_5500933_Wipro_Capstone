@@ -1,0 +1,24 @@
+[32mINFO    [0m AutomationLogger:conftest.py:36 === Setting up Edge WebDriver ===
+[32mINFO    [0m AutomationLogger:conftest.py:51 Edge WebDriver initialized with anti-detection flags
+[32mINFO    [0m AutomationLogger:conftest.py:53 bigB homepage opened
+[32mINFO    [0m AutomationLogger:test_search_and_checkout.py:27 === Test START | mobile: 9030652433 | product: Amul Butter ===
+[32mINFO    [0m AutomationLogger:login_page.py:21 Navigating to bigB
+[32mINFO    [0m AutomationLogger:base_page.py:12 Opening URL: https://www.bigbasket.com/
+[32mINFO    [0m AutomationLogger:base_page.py:15 URL opened: https://www.bigbasket.com/
+[32mINFO    [0m AutomationLogger:login_page.py:27 bigB homepage fully loaded
+[32mINFO    [0m AutomationLogger:login_page.py:47 Entering mobile/email: 9030652433
+[32mINFO    [0m AutomationLogger:login_page.py:54 Mobile/email entered successfully
+[32mINFO    [0m AutomationLogger:login_page.py:59 Clicking Continue button
+[32mINFO    [0m AutomationLogger:login_page.py:64 Continue clicked
+[32mINFO    [0m AutomationLogger:login_page.py:72 Waiting up to 30s for OTP page heading
+[32mINFO    [0m AutomationLogger:login_page.py:78 OTP page detected — enter OTP manually in browser
+[32mINFO    [0m AutomationLogger:login_page.py:92 Waiting up to 120s for Verify & Continue button
+[32mINFO    [0m AutomationLogger:login_page.py:97 Verify & Continue clickable — clicking
+[32mINFO    [0m AutomationLogger:login_page.py:100 Verify & Continue clicked
+[32mINFO    [0m AutomationLogger:login_page.py:112 Checking for location popup after login
+[32mINFO    [0m AutomationLogger:login_page.py:119 Location popup dismissed — clicked 'Got it'
+[32mINFO    [0m AutomationLogger:test_search_and_checkout.py:87 === Test PASSED | mobile: 9030652433 | product: Amul Butter ===
+[32mINFO    [0m AutomationLogger:conftest.py:55 Quitting WebDriver
+[32mINFO    [0m AutomationLogger:conftest.py:58 === WebDriver session closed ===
+[32mINFO    [0m AutomationLogger:test_negative.py:46 Quitting WebDriver
+[32mINFO    [0m AutomationLogger:test_negative.py:49 === WebDriver session closed ===

@@ -106,3 +106,111 @@
 2026-05-22 20:32:52,469 - INFO - === WebDriver session closed ===
 2026-05-22 20:32:52,473 - INFO - Quitting WebDriver
 2026-05-22 20:33:04,702 - INFO - === WebDriver session closed ===
+2026-05-23 19:35:47,569 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\bigB\test_data\positive_data.csv
+2026-05-23 19:35:47,570 - INFO - CSV loaded: 1 rows from positive_data.csv
+2026-05-23 19:35:47,574 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\bigB\test_data\login_data.csv
+2026-05-23 19:35:47,574 - INFO - CSV loaded: 1 rows from login_data.csv
+2026-05-23 19:35:47,575 - INFO - Reading CSV: C:\Users\sahii\OneDrive\Desktop\CapPro\bigB\test_data\search_data.csv
+2026-05-23 19:35:47,575 - INFO - CSV loaded: 2 rows from search_data.csv
+2026-05-23 19:35:47,577 - INFO - === Setting up Edge WebDriver ===
+2026-05-23 19:35:48,535 - INFO - Edge WebDriver initialized with anti-detection flags
+2026-05-23 19:35:50,957 - INFO - bigB homepage opened
+2026-05-23 19:35:50,958 - INFO - === LOGIN START ===
+2026-05-23 19:35:50,958 - INFO - Navigating to bigB
+2026-05-23 19:35:50,958 - INFO - Opening URL: https://www.bigbasket.com/
+2026-05-23 19:35:58,770 - INFO - URL opened: https://www.bigbasket.com/
+2026-05-23 19:35:58,800 - INFO - bigB homepage fully loaded
+2026-05-23 19:35:59,160 - INFO - Entering mobile/email: 9030652433
+2026-05-23 19:36:00,345 - INFO - Mobile/email entered successfully
+2026-05-23 19:36:00,345 - INFO - Clicking Continue button
+2026-05-23 19:36:00,416 - INFO - Continue clicked
+2026-05-23 19:36:00,416 - INFO - Waiting up to 30s for OTP page heading
+2026-05-23 19:36:01,972 - INFO - OTP page detected — enter OTP manually in browser
+2026-05-23 19:36:01,972 - INFO - Waiting up to 120s for Verify & Continue button
+2026-05-23 19:36:12,460 - INFO - Verify & Continue clickable — clicking
+2026-05-23 19:36:12,511 - INFO - Verify & Continue clicked
+2026-05-23 19:36:12,512 - INFO - Checking for location popup after login
+2026-05-23 19:36:16,003 - INFO - Location popup dismissed — clicked 'Got it'
+2026-05-23 19:36:16,036 - INFO - === LOGIN SUCCESS ===
+2026-05-23 19:36:16,038 - INFO - === NEGATIVE TEST (invalid search) START | rftDfhwthdfvadwAEFDC ===
+2026-05-23 19:36:36,257 - INFO - Searched: rftDfhwthdfvadwAEFDC
+2026-05-23 19:36:39,362 - INFO - Screenshot saved: screenshots\NEGATIVE_invalid_search_rftDfhwthdfvadwAEFDC.png
+2026-05-23 19:36:39,382 - INFO - Test PASSED: test_negative_invalid_search[rftDfhwthdfvadwAEFDC] - capturing screenshot
+2026-05-23 19:36:39,466 - INFO - Screenshot saved: screenshots\PASSED_test_negative_invalid_search_rftDfhwthdfvadwAEFDC.png
+2026-05-23 19:36:39,480 - INFO - === NEGATIVE TEST (empty basket) START ===
+2026-05-23 19:36:53,725 - INFO - Screenshot saved: screenshots\NEGATIVE_empty_basket.png
+2026-05-23 19:36:53,747 - INFO - === NEGATIVE TEST PASSED | Empty basket checkout blocked ===
+2026-05-23 19:36:53,747 - INFO - Test PASSED: test_negative_empty_basket_checkout - capturing screenshot
+2026-05-23 19:36:53,827 - INFO - Screenshot saved: screenshots\PASSED_test_negative_empty_basket_checkout.png
+2026-05-23 19:36:53,836 - INFO - === Setting up Edge WebDriver ===
+2026-05-23 19:36:54,562 - INFO - Edge WebDriver initialized with anti-detection flags
+2026-05-23 19:36:57,199 - INFO - bigB homepage opened
+2026-05-23 19:36:57,199 - INFO - === LOGIN START ===
+2026-05-23 19:36:57,200 - INFO - Navigating to bigB
+2026-05-23 19:36:57,200 - INFO - Opening URL: https://www.bigbasket.com/
+2026-05-23 19:36:58,584 - INFO - URL opened: https://www.bigbasket.com/
+2026-05-23 19:36:58,618 - INFO - bigB homepage fully loaded
+2026-05-23 19:36:58,619 - INFO - BigBasket opened
+2026-05-23 19:36:58,994 - INFO - Login clicked
+2026-05-23 19:36:58,994 - INFO - Entering mobile/email: 9030652433
+2026-05-23 19:37:00,188 - INFO - Mobile/email entered successfully
+2026-05-23 19:37:00,188 - INFO - Mobile entered
+2026-05-23 19:37:00,189 - INFO - Clicking Continue button
+2026-05-23 19:37:00,233 - INFO - Continue clicked
+2026-05-23 19:37:00,233 - INFO - Continue clicked
+2026-05-23 19:37:00,233 - INFO - Waiting up to 30s for OTP page heading
+2026-05-23 19:37:01,785 - INFO - OTP page detected — enter OTP manually in browser
+2026-05-23 19:37:01,786 - INFO - OTP page confirmed — enter OTP in browser now
+2026-05-23 19:37:01,786 - INFO - Waiting up to 120s for Verify & Continue button
+2026-05-23 19:37:08,582 - INFO - Verify & Continue clickable — clicking
+2026-05-23 19:37:08,647 - INFO - Verify & Continue clicked
+2026-05-23 19:37:08,648 - INFO - OTP verified
+2026-05-23 19:37:08,648 - INFO - Checking for location popup after login
+2026-05-23 19:37:11,646 - INFO - Location popup dismissed — clicked 'Got it'
+2026-05-23 19:37:11,647 - INFO - Location popup handled
+2026-05-23 19:37:11,658 - INFO - Login confirmed — search box visible
+2026-05-23 19:37:11,658 - INFO - === LOGIN SUCCESS ===
+2026-05-23 19:37:11,659 - INFO - === SEARCH TEST START | Cricket bat ===
+2026-05-23 19:37:31,939 - INFO - Searched: Cricket bat
+2026-05-23 19:37:31,940 - INFO - Test PASSED: test_search_product[Cricket bat] - capturing screenshot
+2026-05-23 19:37:32,090 - INFO - Screenshot saved: screenshots\PASSED_test_search_product_Cricket_bat.png
+2026-05-23 19:37:32,108 - INFO - === ADD TEST START | Cricket bat ===
+2026-05-23 19:37:33,934 - INFO - Product added
+2026-05-23 19:37:33,934 - INFO - Test PASSED: test_add_to_basket[Cricket bat] - capturing screenshot
+2026-05-23 19:37:34,089 - INFO - Screenshot saved: screenshots\PASSED_test_add_to_basket_Cricket_bat.png
+2026-05-23 19:37:34,102 - INFO - === OPEN BASKET TEST START | Cricket bat ===
+2026-05-23 19:37:38,842 - INFO - Basket opened for Cricket bat
+2026-05-23 19:37:38,843 - INFO - Test PASSED: test_open_basket[Cricket bat] - capturing screenshot
+2026-05-23 19:37:38,962 - INFO - Screenshot saved: screenshots\PASSED_test_open_basket_Cricket_bat.png
+2026-05-23 19:37:38,978 - INFO - === CHECKOUT TEST START | Cricket bat ===
+2026-05-23 19:37:38,997 - INFO - === POSITIVE TEST PASSED | Cricket bat added to basket ===
+2026-05-23 19:37:38,997 - INFO - Test PASSED: test_checkout_button_visible[Cricket bat] - capturing screenshot
+2026-05-23 19:37:39,112 - INFO - Screenshot saved: screenshots\PASSED_test_checkout_button_visible_Cricket_bat.png
+2026-05-23 19:37:39,125 - INFO - Quitting WebDriver
+2026-05-23 19:37:46,386 - INFO - === WebDriver session closed ===
+2026-05-23 19:37:46,395 - INFO - === Setting up Edge WebDriver ===
+2026-05-23 19:37:47,147 - INFO - Edge WebDriver initialized with anti-detection flags
+2026-05-23 19:37:49,865 - INFO - bigB homepage opened
+2026-05-23 19:37:49,866 - INFO - === Test START | mobile: 9030652433 | product: Amul Butter ===
+2026-05-23 19:37:49,867 - INFO - Navigating to bigB
+2026-05-23 19:37:49,867 - INFO - Opening URL: https://www.bigbasket.com/
+2026-05-23 19:37:51,239 - INFO - URL opened: https://www.bigbasket.com/
+2026-05-23 19:37:51,267 - INFO - bigB homepage fully loaded
+2026-05-23 19:37:51,589 - INFO - Entering mobile/email: 9030652433
+2026-05-23 19:37:52,775 - INFO - Mobile/email entered successfully
+2026-05-23 19:37:52,776 - INFO - Clicking Continue button
+2026-05-23 19:37:52,853 - INFO - Continue clicked
+2026-05-23 19:37:52,853 - INFO - Waiting up to 30s for OTP page heading
+2026-05-23 19:37:54,410 - INFO - OTP page detected — enter OTP manually in browser
+2026-05-23 19:37:54,411 - INFO - Waiting up to 120s for Verify & Continue button
+2026-05-23 19:38:01,747 - INFO - Verify & Continue clickable — clicking
+2026-05-23 19:38:01,796 - INFO - Verify & Continue clicked
+2026-05-23 19:38:01,797 - INFO - Checking for location popup after login
+2026-05-23 19:38:04,256 - INFO - Location popup dismissed — clicked 'Got it'
+2026-05-23 19:38:38,652 - INFO - === Test PASSED | mobile: 9030652433 | product: Amul Butter ===
+2026-05-23 19:38:38,653 - INFO - Test PASSED: test_search_and_checkout[9030652433-Amul Butter] - capturing screenshot
+2026-05-23 19:38:38,757 - INFO - Screenshot saved: screenshots\PASSED_test_search_and_checkout_9030652433-Amul_Butter.png
+2026-05-23 19:38:38,770 - INFO - Quitting WebDriver
+2026-05-23 19:38:46,049 - INFO - === WebDriver session closed ===
+2026-05-23 19:38:46,052 - INFO - Quitting WebDriver
+2026-05-23 19:38:58,380 - INFO - === WebDriver session closed ===
